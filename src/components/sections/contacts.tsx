@@ -1,30 +1,101 @@
 'use client';
 
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { contactsData } from '@/data/contacts-data';
 
+// ── Web3Forms endpoint (no backend needed) ─────────────────────────────────
+const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
+const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? '';
+
+type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
+
+interface FormState {
+  name: string;
+  email: string;
+  message: string;
+}
+
+const EMPTY_FORM: FormState = { name: '', email: '', message: '' };
+
 export function Contacts() {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  const [statusMessage, setStatusMessage] = useState('');
+  const [form, setForm] = useState<FormState>(EMPTY_FORM);
+  const [status, setStatus] = useState<FormStatus>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
+  // Honeypot ref — must stay unchecked for real humans
+  const honeypotRef = useRef<HTMLInputElement>(null);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    // Clear status when user starts typing again
+    if (status === 'error' || status === 'success') setStatus('idle');
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
-      setStatus('error');
-      setStatusMessage('Please fill all fields.');
+
+    // Honeypot check — if bot filled it, fake success silently without wasting quota
+    if (honeypotRef.current?.checked) {
+      setStatus('success');
+      setForm(EMPTY_FORM);
       return;
     }
-    setStatus('loading');
-    await new Promise((r) => setTimeout(r, 800));
-    setStatus('success');
-    setStatusMessage('Thank you! I will get back to you soon.');
-    setFormData({ name: '', email: '', message: '' });
+
+    if (!ACCESS_KEY) {
+      setStatus('error');
+      setErrorMsg('Contact form is not configured yet. Please email me directly.');
+      return;
+    }
+
+    setStatus('submitting');
+    setErrorMsg('');
+
+    try {
+      const payload = {
+        access_key: ACCESS_KEY,
+        name: form.name.trim(),
+        email: form.email.trim(),
+        message: form.message.trim(),
+        from_name: 'Portfolio Contact Form — chanthorndev.site',
+        subject: `New message from Portfolio - chanthorndev.site (${form.name.trim()})`,
+      };
+
+      const res = await fetch(WEB3FORMS_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        setStatus('success');
+        setForm(EMPTY_FORM);
+        // Reset button back to idle after 6 seconds so user can send another message if needed
+        setTimeout(() => {
+          setStatus((prev) => (prev === 'success' ? 'idle' : prev));
+        }, 6000);
+      } else {
+        throw new Error(data.message ?? 'Submission failed.');
+      }
+    } catch (err: unknown) {
+      setStatus('error');
+      setErrorMsg(
+        err instanceof Error
+          ? err.message
+          : 'Something went wrong. Please try again or email me directly.'
+      );
+    }
   };
 
-  const inputClass =
-    'w-full rounded-md border border-[#353a52] bg-[#10172d] px-3 py-2 text-sm text-white placeholder:text-gray-400 focus:border-violet-500 focus:outline-none transition-colors';
+  const isSubmitting = status === 'submitting';
+
+  const inputBase =
+    'w-full rounded-md border border-[#353a52] bg-[#10172d] px-3 py-2 text-sm text-white placeholder:text-gray-500 ' +
+    'focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500/30 ' +
+    'transition-colors disabled:opacity-50 disabled:cursor-not-allowed';
 
   return (
     <div id="contact" className="relative z-50 border-t my-12 lg:my-24 border-[#25213b]">
@@ -55,7 +126,10 @@ export function Contacts() {
             {contactsData.email && (
               <div className="flex items-center gap-3">
                 <span className="text-[#16f2b3] font-bold">Email:</span>
-                <a href={`mailto:${contactsData.email}`} className="text-gray-300 hover:text-violet-400 transition-colors text-sm break-all">
+                <a
+                  href={`mailto:${contactsData.email}`}
+                  className="text-gray-300 hover:text-violet-400 transition-colors text-sm break-all"
+                >
                   {contactsData.email}
                 </a>
               </div>
@@ -63,7 +137,10 @@ export function Contacts() {
             {contactsData.phone && (
               <div className="flex items-center gap-3">
                 <span className="text-[#16f2b3] font-bold">Phone:</span>
-                <a href={`tel:${contactsData.phone}`} className="text-gray-300 hover:text-violet-400 transition-colors text-sm">
+                <a
+                  href={`tel:${contactsData.phone}`}
+                  className="text-gray-300 hover:text-violet-400 transition-colors text-sm"
+                >
                   {contactsData.phone}
                 </a>
               </div>
@@ -77,74 +154,143 @@ export function Contacts() {
           </div>
         </div>
 
-        {/* RIGHT: Form */}
+        {/* RIGHT: Web3Forms contact form */}
         <div className="from-[#0d1224] border-[#1b2c68a0] relative rounded-lg border bg-gradient-to-r to-[#0a0d37]">
+          {/* Top gradient border */}
           <div className="flex flex-row">
             <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-pink-500 to-violet-600" />
             <div className="h-[1px] w-full bg-gradient-to-r from-violet-600 to-transparent" />
           </div>
+
           <div className="px-6 py-6">
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col gap-4"
+              noValidate
+              aria-label="Contact form"
+            >
+              {/* ── Honeypot — hidden from humans, catches bots ── */}
+              <input
+                type="checkbox"
+                name="botcheck"
+                ref={honeypotRef}
+                className="hidden"
+                tabIndex={-1}
+                aria-hidden="true"
+                defaultChecked={false}
+              />
+
+              {/* ── Success banner ── */}
               {status === 'success' && (
-                <div className="rounded-md bg-green-500/10 border border-green-500/30 p-3 text-green-400 text-sm">
-                  {statusMessage}
-                </div>
-              )}
-              {status === 'error' && (
-                <div className="rounded-md bg-red-500/10 border border-red-500/30 p-3 text-red-400 text-sm">
-                  {statusMessage}
+                <div
+                  role="alert"
+                  className="flex items-start gap-2 rounded-md bg-green-500/10 border border-green-500/30 p-3 text-green-400 text-sm"
+                >
+                  <svg className="h-4 w-4 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" />
+                  </svg>
+                  <span>Thank you! Your message was sent. I&apos;ll get back to you soon.</span>
                 </div>
               )}
 
+              {/* ── Error banner ── */}
+              {status === 'error' && (
+                <div
+                  role="alert"
+                  className="flex items-start gap-2 rounded-md bg-red-500/10 border border-red-500/30 p-3 text-red-400 text-sm"
+                >
+                  <svg className="h-4 w-4 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clipRule="evenodd" />
+                  </svg>
+                  <span>{errorMsg || 'Something went wrong. Please try again.'}</span>
+                </div>
+              )}
+
+              {/* ── Name ── */}
               <div>
-                <label htmlFor="contact-name" className="text-xs text-gray-300 font-medium uppercase tracking-wider block mb-1">
+                <label
+                  htmlFor="contact-name"
+                  className="text-xs text-gray-300 font-medium uppercase tracking-wider block mb-1"
+                >
                   Your Name
                 </label>
                 <input
                   id="contact-name"
+                  name="name"
                   type="text"
                   required
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="Jane Doe"
-                  className={inputClass}
+                  autoComplete="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  disabled={isSubmitting}
+                  placeholder="Kim Chanthorn"
+                  className={inputBase}
                 />
               </div>
+
+              {/* ── Email ── */}
               <div>
-                <label htmlFor="contact-email" className="text-xs text-gray-300 font-medium uppercase tracking-wider block mb-1">
+                <label
+                  htmlFor="contact-email"
+                  className="text-xs text-gray-300 font-medium uppercase tracking-wider block mb-1"
+                >
                   Email
                 </label>
                 <input
                   id="contact-email"
+                  name="email"
                   type="email"
                   required
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  placeholder="jane@example.com"
-                  className={inputClass}
+                  autoComplete="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  disabled={isSubmitting}
+                  placeholder="you@example.com"
+                  className={inputBase}
                 />
               </div>
+
+              {/* ── Message ── */}
               <div>
-                <label htmlFor="contact-message" className="text-xs text-gray-300 font-medium uppercase tracking-wider block mb-1">
+                <label
+                  htmlFor="contact-message"
+                  className="text-xs text-gray-300 font-medium uppercase tracking-wider block mb-1"
+                >
                   Message
                 </label>
                 <textarea
                   id="contact-message"
+                  name="message"
                   required
                   rows={4}
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  value={form.message}
+                  onChange={handleChange}
+                  disabled={isSubmitting}
                   placeholder="Your message..."
-                  className={`${inputClass} resize-none`}
+                  className={`${inputBase} resize-none`}
                 />
               </div>
+
+              {/* ── Submit ── */}
               <button
                 type="submit"
-                disabled={status === 'loading'}
-                aria-label="Send Message"
-                className="flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-pink-500 px-8 py-3 text-sm font-semibold uppercase tracking-wider text-white transition-all duration-300 hover:from-pink-500 hover:to-violet-600 disabled:opacity-60"
+                id="contact-submit"
+                disabled={isSubmitting || status === 'success'}
+                aria-label={isSubmitting ? 'Sending message…' : 'Send message'}
+                className="flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-pink-500 px-8 py-3 text-sm font-semibold uppercase tracking-wider text-white transition-all duration-300 hover:from-pink-500 hover:to-violet-600 disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                {status === 'loading' ? 'Sending...' : 'Send Message'}
+                {isSubmitting && (
+                  <svg
+                    className="h-4 w-4 animate-spin"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                )}
+                {isSubmitting ? 'Sending…' : status === 'success' ? 'Message Sent ✓' : 'Send Message'}
               </button>
             </form>
           </div>
@@ -153,4 +299,3 @@ export function Contacts() {
     </div>
   );
 }
-

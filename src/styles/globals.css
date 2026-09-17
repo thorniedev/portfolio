@@ -106,12 +106,7 @@
     color: var(--color-text) !important;
   }
 
-  /* Navbar brand stays accent */
-  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) nav a.text-\[\#16f2b3\] {
-    color: var(--color-accent) !important;
-  }
-
-  /* Section "WHO I AM?" headings */
+  /* Accent colored text */
   :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) .text-\[\#16f2b3\] {
     color: var(--color-accent) !important;
   }
@@ -132,11 +127,6 @@
   /* "ABOUT ME" vertical sidebar span */
   :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) .text-\[\#1b203e\] {
     color: var(--color-text) !important;
-  }
-
-  /* Hero tagline accent */
-  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) span.text-\[\#16f2b3\] {
-    color: var(--color-accent) !important;
   }
 
   ::-webkit-scrollbar {
