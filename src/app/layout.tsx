@@ -3,6 +3,8 @@ import { Poppins, Outfit } from 'next/font/google';
 import { Navbar } from '@/components/sections/navbar';
 import { Footer } from '@/components/sections/footer';
 import { BackToTop } from '@/components/ui/back-to-top';
+import { ThemeProvider } from '@/lib/theme';
+import { ThemeSelector } from '@/components/ui/theme-selector';
 import { headerData } from '@/data/header-data';
 import { contactsData } from '@/data/contacts-data';
 import { socialsData } from '@/data/socials-data';
@@ -246,16 +248,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className={`${poppins.variable} ${outfit.variable} font-sans antialiased`}>
-        <div className="min-h-screen relative mx-auto px-6 sm:px-12 lg:max-w-[70rem] xl:max-w-[76rem] 2xl:max-w-[92rem] text-white">
-          <header>
-            <Navbar />
-          </header>
-          <main id="main-content">
-            {children}
-          </main>
-          <Footer />
-        </div>
-        <BackToTop />
+        <ThemeProvider>
+          <div className="min-h-screen relative mx-auto px-6 sm:px-12 lg:max-w-[70rem] xl:max-w-[76rem] 2xl:max-w-[92rem] text-white">
+            <header>
+              <Navbar />
+            </header>
+            <main id="main-content">
+              {children}
+            </main>
+            <Footer />
+          </div>
+          <BackToTop />
+          <ThemeSelector />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -2,34 +2,110 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Theme CSS Variables ──────────────────────────────────────────────────── */
+/* Dark (default) */
+:root,
+[data-theme="dark"] {
+  --color-bg:       #0d1224;
+  --color-surface:  #1b203e;
+  --color-card:     #1d293a;
+  --color-border:   #1d293a;
+  --color-text:     #d1d5db;
+  --color-muted:    #6b7280;
+  --color-accent:   #16f2b3;
+  --color-accent2:  #7c3aed;
+  --color-name:     #ec4899;
+  --color-scrollbar-track: #0d1224;
+  --color-scrollbar-thumb: #1a1443;
+  --color-scrollbar-hover: #16f2b3;
+  --color-selection-bg: rgba(22,242,179,0.2);
+  --color-selection-text: #16f2b3;
+}
+
+/* Light */
+[data-theme="light"] {
+  --color-bg:       #f8fafc;
+  --color-surface:  #ffffff;
+  --color-card:     #f1f5f9;
+  --color-border:   #e2e8f0;
+  --color-text:     #1e293b;
+  --color-muted:    #64748b;
+  --color-accent:   #7c3aed;
+  --color-accent2:  #ec4899;
+  --color-name:     #db2777;
+  --color-scrollbar-track: #f1f5f9;
+  --color-scrollbar-thumb: #cbd5e1;
+  --color-scrollbar-hover: #7c3aed;
+  --color-selection-bg: rgba(124,58,237,0.2);
+  --color-selection-text: #7c3aed;
+}
+
+/* Aqua */
+[data-theme="aqua"] {
+  --color-bg:       #cffafa;
+  --color-surface:  #a5f3f3;
+  --color-card:     #99eaea;
+  --color-border:   #67e8f9;
+  --color-text:     #134e4a;
+  --color-muted:    #0f766e;
+  --color-accent:   #0d9488;
+  --color-accent2:  #ff6b6b;
+  --color-name:     #0f766e;
+  --color-scrollbar-track: #a5f3f3;
+  --color-scrollbar-thumb: #67e8f9;
+  --color-scrollbar-hover: #0d9488;
+  --color-selection-bg: rgba(13,148,136,0.2);
+  --color-selection-text: #0d9488;
+}
+
+/* Retro */
+[data-theme="retro"] {
+  --color-bg:       #fef3c7;
+  --color-surface:  #fde68a;
+  --color-card:     #fbbf24;
+  --color-border:   #f59e0b;
+  --color-text:     #3b2a1a;
+  --color-muted:    #78350f;
+  --color-accent:   #d97706;
+  --color-accent2:  #b45309;
+  --color-name:     #92400e;
+  --color-scrollbar-track: #fde68a;
+  --color-scrollbar-thumb: #f59e0b;
+  --color-scrollbar-hover: #d97706;
+  --color-selection-bg: rgba(217,119,6,0.2);
+  --color-selection-text: #d97706;
+}
+
+/* ─── Base Styles ──────────────────────────────────────────────────────────── */
 @layer base {
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    background-color: #0d1224;
-    color: #d1d5db;
+    background-color: var(--color-bg);
+    color: var(--color-text);
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   ::-webkit-scrollbar {
     width: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #0d1224;
+    background: var(--color-scrollbar-track);
   }
   ::-webkit-scrollbar-thumb {
-    background: #1a1443;
+    background: var(--color-scrollbar-thumb);
     border-radius: 9999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #16f2b3;
+    background: var(--color-scrollbar-hover);
   }
 
   ::selection {
-    background: rgba(22, 242, 179, 0.2);
-    color: #16f2b3;
+    background: var(--color-selection-bg);
+    color: var(--color-selection-text);
   }
 
   /* Hide Netlify Drawer / HUD badge */
