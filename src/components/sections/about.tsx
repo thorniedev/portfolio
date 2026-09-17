@@ -29,14 +29,14 @@ export function About() {
         </div>
 
         {/* RIGHT: Profile Photo */}
-        <div className="flex justify-center order-1 lg:order-2">
+        <div className="flex justify-center items-center order-1 lg:order-2">
           <Image
             alt="Kim Chanthorn (ThornieDev) — Full-Stack Developer Cambodia"
             loading="lazy"
-            width={280}
-            height={280}
-            sizes="(max-width: 768px) 100vw, 280px"
-            className="rounded-lg transition-all duration-1000 grayscale hover:grayscale-0 hover:scale-110 cursor-pointer"
+            width={350}
+            height={273}
+            sizes="(max-width: 768px) 100vw, 350px"
+            className="rounded-xl shadow-2xl transition-all duration-500 grayscale hover:grayscale-0 hover:scale-105 cursor-pointer border border-[#2a2e5a]"
             style={{ width: 'auto', height: 'auto' }}
             src={headerData.image}
           />
