@@ -12,13 +12,15 @@ import { getDevToArticles } from '@/lib/devto';
  *  0.8 → Blog listing (regularly updated)
  *  0.7 → Individual blog articles
  */
+import { contactsData } from '@/data/contacts-data';
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const SITE_URL = 'https://chanthorndev.site';
 
   // Fetch live blog articles; fall back to static data if offline/error
   let articles = fallbackBlogData;
   try {
-    const fetched = await getDevToArticles('thornie');
+    const fetched = await getDevToArticles(contactsData.devUsername);
     if (fetched.length > 0) articles = fetched;
   } catch {
     // silently fall back to static data

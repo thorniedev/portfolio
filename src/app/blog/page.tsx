@@ -2,37 +2,39 @@ import type { Metadata } from 'next';
 import { BlogArchive } from '@/components/sections/blog-archive';
 import { getDevToArticles } from '@/lib/devto';
 import { generateTechArticleSchema } from '@/lib/schema';
+import { contactsData } from '@/data/contacts-data';
+
+const SITE_URL = 'https://chanthorndev.site';
 
 export const metadata: Metadata = {
-  title: 'Articles & Engineering Blog',
+  title: 'Technical Blog & Engineering Articles',
   description:
-    'Technical deep-dives on systems architecture, web performance, automation, and full-stack engineering written by Abu Said.',
+    'Technical deep-dives on full-stack architecture, Next.js, TypeScript, and software engineering written by Kim Chanthorn (ThornieDev) in Cambodia.',
   alternates: {
     canonical: '/blog',
   },
   openGraph: {
-    title: 'Articles & Engineering Blog | Abu Said',
+    title: 'Technical Blog & Engineering Articles | Kim Chanthorn',
     description:
-      'Technical deep-dives on systems architecture, web performance, automation, and full-stack engineering.',
-    url: 'https://abusaid.dev/blog',
+      'Technical deep-dives on full-stack architecture, Next.js, TypeScript, and software engineering written by Kim Chanthorn (ThornieDev).',
+    url: `${SITE_URL}/blog`,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Articles & Engineering Blog | Abu Said',
+    title: 'Technical Blog & Engineering Articles | Kim Chanthorn',
     description:
-      'Technical deep-dives on systems architecture, web performance, automation, and full-stack engineering.',
+      'Technical deep-dives on full-stack architecture, Next.js, TypeScript, and software engineering written by Kim Chanthorn (ThornieDev).',
   },
 };
 
 export default async function BlogPage() {
-  const blogs = await getDevToArticles('said7388');
-  const siteUrl = 'https://abusaid.dev';
+  const blogs = await getDevToArticles(contactsData.devUsername).catch(() => []);
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       {/* Inject TechArticle JSON-LD for first 3 articles */}
       {blogs.slice(0, 3).map((article) => {
-        const schema = generateTechArticleSchema(article, siteUrl);
+        const schema = generateTechArticleSchema(article, SITE_URL);
         return (
           <script
             key={article.id}

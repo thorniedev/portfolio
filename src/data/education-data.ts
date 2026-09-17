@@ -3,23 +3,16 @@ import { EducationItem } from '@/types';
 export const educationData: EducationItem[] = [
   {
     id: 1,
-    institution: 'Noakhali Government College',
-    course: 'Bachelor Degree',
-    startYear: '2020',
+    institution: 'Institute of Science and Technology Advanced Development (ISTAD)',
+    course: 'Software Engineering & Advanced IT Development',
+    startYear: '2023',
     endYear: 'Present',
   },
   {
     id: 2,
-    institution: 'Noakhali Islamia Kamil Madrasah',
-    course: 'Higher Secondary Certificate',
-    startYear: '2018',
-    endYear: '2020',
-  },
-  {
-    id: 3,
-    institution: 'Baitus Saif Islamia Madrasah',
-    course: 'Secondary School Certificate',
-    startYear: '2008',
-    endYear: '2018',
+    institution: 'Royal University of Phnom Penh (RUPP)',
+    course: 'Computer Science & Information Technology',
+    startYear: '2021',
+    endYear: 'Present',
   },
 ];

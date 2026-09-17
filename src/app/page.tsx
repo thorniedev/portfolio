@@ -30,9 +30,11 @@ export const metadata: Metadata = {
   },
 };
 
+import { contactsData } from '@/data/contacts-data';
+
 // ─── Async blog feed (streamed via Suspense) ──────────────────────────────────
 async function StreamedBlogFeed() {
-  let blogs = await getDevToArticles('thornie').catch(() => []);
+  const blogs = await getDevToArticles(contactsData.devUsername).catch(() => []);
   return <BlogSection blogs={blogs} />;
 }
 
@@ -90,7 +92,7 @@ export default async function HomePage() {
 
       {/* Education */}
       <section aria-label="Education of Kim Chanthorn">
-        <h2 className="sr-only">Education Background — Kim Chanthorn, Khmer Dev</h2>
+        <h2 className="sr-only">Education Background — Kim Chanthorn, IT Student at ISTAD &amp; RUPP (Royal University of Phnom Penh)</h2>
         <Education />
       </section>
 

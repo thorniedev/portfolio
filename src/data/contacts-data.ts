@@ -10,5 +10,5 @@ export const contactsData: ContactsData = {
   twitter: 'https://twitter.com/thorniedev',
   medium: '',
   stackOverflow: '',
-  devUsername: 'thornie',
+  devUsername: 'thorniedev',
 };
