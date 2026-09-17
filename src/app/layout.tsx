@@ -133,6 +133,15 @@ export const metadata: Metadata = {
   // ── App / PWA metadata ──────────────────────────────────────────────────────
   applicationName: 'Kim Chanthorn Portfolio',
   referrer: 'origin-when-cross-origin',
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/favicon.png', type: 'image/png', sizes: '64x64' },
+      { url: '/favicon512.png', type: 'image/png', sizes: '512x512' },
+    ],
+    apple: [{ url: '/apple-icon.png', sizes: '180x180', type: 'image/png' }],
+  },
+  manifest: '/manifest.json',
 };
 
 // ─── Viewport ────────────────────────────────────────────────────────────────
