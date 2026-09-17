@@ -1,10 +1,18 @@
 'use client';
 
 import * as React from 'react';
-import { useState, useEffect, useRef } from 'react';
+import dynamic from 'next/dynamic';
+
+const Lottie = dynamic(
+  () => import('lottie-react').then((mod) => mod.Lottie),
+  {
+    ssr: false,
+    loading: () => <div className="w-full h-full min-h-[280px]" aria-hidden="true" />,
+  }
+);
 
 interface AnimationLottieProps {
-  animationPath?: Record<string, unknown> | unknown[];
+  animationPath?: any;
   animationType?: 'code' | 'study';
   width?: string;
 }
@@ -14,64 +22,23 @@ export default function AnimationLottie({
   animationType = 'code',
   width = '95%',
 }: AnimationLottieProps) {
-  const [LottieComponent, setLottieComponent] = useState<React.ComponentType<any> | null>(null);
-  const [data, setData] = useState<any>(animationPath || null);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries;
-        if (entry.isIntersecting) {
-          // Load lottie-react and json chunk ONLY when user scrolls near this section
-          Promise.all([
-            import('lottie-react'),
-            animationPath
-              ? Promise.resolve({ default: animationPath })
-              : animationType === 'study'
-              ? import('@/assets/lottie/study.json')
-              : import('@/assets/lottie/code.json'),
-          ])
-            .then(([lottieMod, jsonMod]) => {
-              const Comp = (lottieMod as any).default || (lottieMod as any).Lottie || lottieMod;
-              setLottieComponent(() => Comp);
-              setData(jsonMod.default || jsonMod);
-            })
-            .catch((err) => {
-              console.error('Failed to load lottie animation:', err);
-            });
-
-          observer.disconnect();
-        }
-      },
-      { rootMargin: '300px' }
-    );
-
-    observer.observe(containerRef.current);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [animationPath, animationType]);
+  const src = animationPath || (animationType === 'study' ? '/study.json' : '/code.json');
 
   return (
-    <div ref={containerRef} className="w-full flex items-center justify-center min-h-[260px]">
-      {LottieComponent && data ? (
-        <LottieComponent
-          animationData={data}
-          loop={true}
-          autoplay={true}
-          style={{
-            width: width || '95%',
-          }}
-        />
-      ) : (
-        <div className="w-full h-full min-h-[260px]" aria-hidden="true" />
-      )}
+    <div className="w-full flex items-center justify-center min-h-[280px]">
+      <Lottie
+        src={src}
+        autoplay={true}
+        loop={true}
+        style={{
+          width: width || '95%',
+          height: 'auto',
+          maxWidth: '100%',
+        }}
+      />
     </div>
   );
 }
+
 
 
