@@ -1,11 +1,20 @@
 import * as React from 'react';
+import Image from 'next/image';
 import { skillsData } from '@/data/skills-data';
 
-// Skills marquee component matching the reference site style
-function SkillTag({ name }: { name: string }) {
+function SkillCard({ name, icon }: { name: string; icon: string }) {
   return (
-    <div className="w-36 min-w-fit h-fit flex items-center justify-center rounded-lg transition-all duration-500 py-2 px-3 text-center group-hover:-translate-y-[4px] cursor-pointer group bg-[#10172d] border border-[#1f223c] hover:border-violet-500">
-      <span className="text-sm transition-all duration-500 text-gray-200 group-hover:text-violet-400 font-medium">
+    <div className="group flex flex-col items-center justify-center gap-3 w-[130px] min-w-[130px] h-[120px] rounded-xl cursor-pointer transition-all duration-300 bg-[#10172d] border border-[#1f223c] hover:border-violet-500 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(124,58,237,0.25)]">
+      <div className="relative w-12 h-12 transition-transform duration-300 group-hover:scale-110">
+        <Image
+          src={icon}
+          alt={`${name} icon`}
+          fill
+          sizes="48px"
+          className="object-contain drop-shadow-md"
+        />
+      </div>
+      <span className="text-xs font-medium text-gray-300 group-hover:text-violet-400 transition-colors duration-300 text-center px-1 leading-tight">
         {name}
       </span>
     </div>
@@ -13,7 +22,6 @@ function SkillTag({ name }: { name: string }) {
 }
 
 export function Skills() {
-  // Split into two rows for the marquee effect
   const half = Math.ceil(skillsData.length / 2);
   const row1 = skillsData.slice(0, half);
   const row2 = skillsData.slice(half);
@@ -23,7 +31,7 @@ export function Skills() {
       {/* Violet blur glow */}
       <div className="w-[100px] h-[100px] bg-violet-100 rounded-full absolute top-6 left-[42%] translate-x-1/2 filter blur-3xl opacity-20" />
 
-      {/* Gradient separator line */}
+      {/* Gradient separator */}
       <div className="flex justify-center -translate-y-[1px]">
         <div className="w-3/4">
           <div className="h-[1px] bg-gradient-to-r from-transparent via-violet-500 to-transparent w-full" />
@@ -41,20 +49,20 @@ export function Skills() {
 
       {/* Skills marquee */}
       <div className="w-full my-12 overflow-hidden">
-        {/* Row 1 — left to right */}
+        {/* Row 1 — scrolls left */}
         <div className="flex items-center gap-4 py-3 overflow-hidden">
-          <div className="flex animate-[marquee_30s_linear_infinite] gap-4">
+          <div className="flex animate-marquee gap-4">
             {[...row1, ...row1].map((skill, i) => (
-              <SkillTag key={`r1-${skill}-${i}`} name={skill} />
+              <SkillCard key={`r1-${skill.name}-${i}`} name={skill.name} icon={skill.icon} />
             ))}
           </div>
         </div>
 
-        {/* Row 2 — right to left */}
+        {/* Row 2 — scrolls right */}
         <div className="flex items-center gap-4 py-3 overflow-hidden">
-          <div className="flex animate-[marquee_30s_linear_infinite_reverse] gap-4">
+          <div className="flex animate-marquee-reverse gap-4">
             {[...row2, ...row2].map((skill, i) => (
-              <SkillTag key={`r2-${skill}-${i}`} name={skill} />
+              <SkillCard key={`r2-${skill.name}-${i}`} name={skill.name} icon={skill.icon} />
             ))}
           </div>
         </div>

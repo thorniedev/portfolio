@@ -222,7 +222,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     headerData,
     contactsData,
     socialsData,
-    skillsData,
+    skillsData.map(s => s.name),
     SITE_URL
   );
   const profileSchema = generateProfilePageSchema(SITE_URL, personSchema);
