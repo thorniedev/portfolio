@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Image from 'next/image';
 import { BsPersonWorkspace } from 'react-icons/bs';
-import studyAnimation from '@/assets/lottie/study.json';
 import AnimationLottie from '@/components/ui/animation-lottie';
 import { educationData } from '@/data/education-data';
 
@@ -38,7 +37,7 @@ export function Education() {
           {/* LEFT: Lottie Animation */}
           <div className="flex justify-center items-start">
             <div className="w-3/4 h-3/4 flex items-center justify-center">
-              <AnimationLottie animationPath={studyAnimation} />
+              <AnimationLottie animationType="study" />
             </div>
           </div>
 

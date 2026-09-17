@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Image from 'next/image';
 import { BsPersonWorkspace } from 'react-icons/bs';
-import experienceAnimation from '@/assets/lottie/code.json';
 import AnimationLottie from '@/components/ui/animation-lottie';
 import { experienceData } from '@/data/experience-data';
 
@@ -31,7 +30,7 @@ export function Experience() {
           {/* LEFT: Lottie animation */}
           <div className="flex justify-center items-start">
             <div className="w-full h-full flex items-center justify-center">
-              <AnimationLottie animationPath={experienceAnimation} />
+              <AnimationLottie animationType="code" />
             </div>
           </div>
 
