@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #0d1224;
+    color: #d1d5db;
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0d1224;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1a1443;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #16f2b3;
+  }
+
+  ::selection {
+    background: rgba(22, 242, 179, 0.2);
+    color: #16f2b3;
+  }
+}
+
+@layer utilities {
+  /* Section title pill — horizontal lines + dark pill */
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+  .section-title-line {
+    width: 96px;
+    height: 2px;
+    background: #1a1443;
+  }
+  .section-title-pill {
+    background: #1a1443;
+    color: white;
+    padding: 8px 20px;
+    font-size: 1.25rem;
+    border-radius: 6px;
+  }
+
+  /* Code window top border gradient */
+  .code-top-border {
+    display: flex;
+    flex-direction: row;
+  }
+  .code-top-border-left {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(to right, transparent, #ec4899, #7c3aed);
+  }
+  .code-top-border-right {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(to right, #7c3aed, transparent);
+  }
+
+  /* Glow card hover effect */
+  .glow-card {
+    transition: all 0.3s ease;
+  }
+  .glow-card:hover {
+    border-color: transparent;
+    box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.5),
+                0 0 30px rgba(124, 58, 237, 0.15),
+                0 0 60px rgba(236, 72, 153, 0.08);
+  }
+
+  /* Violet separator line */
+  .violet-separator {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #7c3aed, transparent);
+  }
+}
