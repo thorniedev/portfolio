@@ -1,15 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import dynamic from 'next/dynamic';
-
-const Lottie = dynamic(
-  () => import('lottie-react').then((mod) => mod.Lottie),
-  {
-    ssr: false,
-    loading: () => <div className="w-full h-full min-h-[280px]" aria-hidden="true" />,
-  }
-);
+import { useEffect, useState } from 'react';
+import { Lottie } from 'lottie-react';
 
 interface AnimationLottieProps {
   animationPath?: any;
@@ -22,7 +15,17 @@ export default function AnimationLottie({
   animationType = 'code',
   width = '95%',
 }: AnimationLottieProps) {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const src = animationPath || (animationType === 'study' ? '/study.json' : '/code.json');
+
+  if (!isMounted) {
+    return <div className="w-full h-full min-h-[280px]" aria-hidden="true" />;
+  }
 
   return (
     <div className="w-full flex items-center justify-center min-h-[280px]">
@@ -39,6 +42,7 @@ export default function AnimationLottie({
     </div>
   );
 }
+
 
 
 
