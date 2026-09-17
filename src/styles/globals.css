@@ -89,6 +89,56 @@
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
+  /* ── Override hardcoded Tailwind white/gray text for non-dark themes ──────── */
+  /* This keeps dark theme exactly as-is while making light/aqua/retro readable */
+  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) .text-white {
+    color: var(--color-text) !important;
+  }
+  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) .text-gray-100,
+  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) .text-gray-200,
+  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) .text-gray-300,
+  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) .text-gray-400 {
+    color: var(--color-muted) !important;
+  }
+
+  /* Nav links */
+  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) nav a div {
+    color: var(--color-text) !important;
+  }
+
+  /* Navbar brand stays accent */
+  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) nav a.text-\[\#16f2b3\] {
+    color: var(--color-accent) !important;
+  }
+
+  /* Section "WHO I AM?" headings */
+  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) .text-\[\#16f2b3\] {
+    color: var(--color-accent) !important;
+  }
+
+  /* Dark card / code block backgrounds for non-dark themes */
+  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) .bg-\[\#0d1224\],
+  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) .from-\[\#0d1224\],
+  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) .to-\[\#0a0d37\] {
+    /* Keep the code window dark — it's intentionally a "terminal" */
+  }
+
+  /* Section pill / sidebar "ABOUT ME" label */
+  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) .bg-\[\#1a1443\] {
+    background-color: var(--color-accent2) !important;
+    color: #ffffff !important;
+  }
+
+  /* "ABOUT ME" vertical sidebar span */
+  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) .text-\[\#1b203e\] {
+    color: var(--color-text) !important;
+  }
+
+  /* Hero tagline accent */
+  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) span.text-\[\#16f2b3\] {
+    color: var(--color-accent) !important;
+  }
+
   ::-webkit-scrollbar {
     width: 6px;
   }

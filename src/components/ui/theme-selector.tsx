@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
-import { Check, X, Palette } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 import { THEMES, useTheme, type ThemeId } from '@/lib/theme';
 
 export function ThemeSelector() {
@@ -11,9 +11,7 @@ export function ThemeSelector() {
   const [mounted, setMounted] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  useEffect(() => { setMounted(true); }, []);
 
   // Close on outside click
   useEffect(() => {
@@ -39,71 +37,53 @@ export function ThemeSelector() {
 
   if (!mounted) return null;
 
+  const activeTheme = THEMES.find(t => t.id === theme)!;
+
   return (
-    <div ref={panelRef} className="fixed bottom-20 right-6 z-50">
-      {/* ── Theme Panel ─────────────────────────────────────────────────── */}
+    <div ref={panelRef} style={{ position: 'fixed', bottom: '80px', right: '24px', zIndex: 50 }}>
+
+      {/* ── Panel ───────────────────────────────────────────────────────── */}
       {open && (
         <div
-          className="theme-panel mb-3"
           role="dialog"
           aria-label="Select theme"
           style={{
             position: 'absolute',
-            bottom: '100%',
+            bottom: 'calc(100% + 12px)',
             right: 0,
-            marginBottom: '12px',
-            width: '280px',
-            borderRadius: '16px',
-            padding: '20px 16px 16px',
-            background: '#0d1224',
-            border: '1px solid rgba(255,255,255,0.08)',
-            boxShadow: '0 24px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04)',
-            animation: 'themePanelIn 0.18s cubic-bezier(0.34,1.56,0.64,1)',
+            width: '272px',
+            borderRadius: '18px',
+            padding: '18px 14px 14px',
+            background: '#111827',
+            border: '1px solid rgba(255,255,255,0.09)',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.04)',
+            animation: 'tsPanelIn 0.18s cubic-bezier(0.34,1.56,0.64,1)',
           }}
         >
           {/* Header */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-            <span
-              style={{
-                fontFamily: 'Consolas, Monaco, monospace',
-                fontSize: '13px',
-                color: 'rgba(255,255,255,0.45)',
-                letterSpacing: '0.05em',
-              }}
-            >
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+            <span style={{ fontFamily: 'Consolas, Monaco, monospace', fontSize: '12px', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.06em' }}>
               _select-theme
             </span>
             <button
               onClick={() => setOpen(false)}
               aria-label="Close theme selector"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '28px',
-                height: '28px',
-                borderRadius: '6px',
-                border: 'none',
-                background: 'transparent',
-                color: 'rgba(255,255,255,0.35)',
-                cursor: 'pointer',
-                transition: 'color 0.15s, background 0.15s',
-              }}
-              onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.8)')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.35)')}
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '26px', height: '26px', borderRadius: '6px', border: 'none', background: 'transparent', color: 'rgba(255,255,255,0.3)', cursor: 'pointer', transition: 'color 0.15s' }}
+              onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.75)')}
+              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.3)')}
             >
-              <X size={14} />
+              <X size={13} />
             </button>
           </div>
 
           {/* Divider */}
-          <div style={{ height: '1px', background: 'rgba(255,255,255,0.07)', marginBottom: '14px' }} />
+          <div style={{ height: '1px', background: 'rgba(255,255,255,0.06)', marginBottom: '12px' }} />
 
           {/* Theme options */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '7px' }}>
             {THEMES.map((t) => {
               const isActive = theme === t.id;
-              const styles = THEME_CARD_STYLES[t.id];
+              const s = CARD_STYLES[t.id];
               return (
                 <button
                   key={t.id}
@@ -114,59 +94,32 @@ export function ThemeSelector() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    padding: '14px 16px',
-                    borderRadius: '12px',
-                    border: isActive ? `1.5px solid ${styles.border}` : '1.5px solid transparent',
-                    background: styles.bg,
+                    padding: '12px 14px',
+                    borderRadius: '11px',
+                    border: isActive ? `1.5px solid ${s.border}` : '1.5px solid transparent',
+                    background: s.bg,
                     cursor: 'pointer',
-                    transition: 'all 0.15s ease',
+                    transition: 'all 0.14s ease',
                     outline: 'none',
-                    boxShadow: isActive ? `0 0 0 2px ${styles.border}30` : 'none',
+                    boxShadow: isActive ? `0 0 0 3px ${s.border}22` : 'none',
                   }}
-                  onMouseEnter={e => {
-                    if (!isActive) {
-                      (e.currentTarget as HTMLElement).style.border = `1.5px solid ${styles.border}60`;
-                    }
-                  }}
-                  onMouseLeave={e => {
-                    if (!isActive) {
-                      (e.currentTarget as HTMLElement).style.border = '1.5px solid transparent';
-                    }
-                  }}
+                  onMouseEnter={e => { if (!isActive) (e.currentTarget as HTMLElement).style.border = `1.5px solid ${s.border}55`; }}
+                  onMouseLeave={e => { if (!isActive) (e.currentTarget as HTMLElement).style.border = '1.5px solid transparent'; }}
                 >
-                  {/* Label */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    {isActive && (
-                      <Check size={14} style={{ color: styles.checkColor, flexShrink: 0 }} strokeWidth={2.5} />
-                    )}
-                    {!isActive && <div style={{ width: '14px', flexShrink: 0 }} />}
-                    <span
-                      style={{
-                        fontSize: '15px',
-                        fontWeight: isActive ? 600 : 500,
-                        color: styles.textColor,
-                        fontFamily: 'inherit',
-                        letterSpacing: '0.01em',
-                      }}
-                    >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    {isActive
+                      ? <Check size={13} strokeWidth={2.8} style={{ color: s.border, flexShrink: 0 }} />
+                      : <div style={{ width: '13px', flexShrink: 0 }} />
+                    }
+                    <span style={{ fontSize: '14px', fontWeight: isActive ? 600 : 500, color: s.textColor, letterSpacing: '0.01em' }}>
                       {t.label}
                     </span>
                   </div>
 
-                  {/* Swatches */}
-                  <div style={{ display: 'flex', gap: '5px' }}>
+                  {/* 4 swatches */}
+                  <div style={{ display: 'flex', gap: '4px' }}>
                     {t.swatches.map((color, i) => (
-                      <div
-                        key={i}
-                        style={{
-                          width: '16px',
-                          height: '16px',
-                          borderRadius: '50%',
-                          background: color,
-                          border: '1.5px solid rgba(0,0,0,0.12)',
-                          flexShrink: 0,
-                        }}
-                      />
+                      <div key={i} style={{ width: '14px', height: '14px', borderRadius: '50%', background: color, border: '1.5px solid rgba(0,0,0,0.15)', flexShrink: 0 }} />
                     ))}
                   </div>
                 </button>
@@ -176,44 +129,51 @@ export function ThemeSelector() {
         </div>
       )}
 
-      {/* ── FAB Button ──────────────────────────────────────────────────── */}
+      {/* ── FAB — neutral pill with 2×2 swatch grid (matches screenshot) ── */}
       <button
         id="theme-selector-trigger"
-        onClick={() => setOpen((o) => !o)}
+        onClick={() => setOpen(o => !o)}
         aria-label={open ? 'Close theme selector' : 'Open theme selector'}
         aria-expanded={open}
+        title="Change theme"
         style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          width: '44px',
-          height: '44px',
+          width: '46px',
+          height: '46px',
           borderRadius: '50%',
-          border: '2px solid rgba(255,255,255,0.12)',
-          background: '#0d1224',
+          border: 'none',
+          background: 'rgba(30,36,58,0.92)',
           cursor: 'pointer',
-          boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
+          boxShadow: '0 4px 18px rgba(0,0,0,0.45)',
+          backdropFilter: 'blur(10px)',
           transition: 'transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s',
           outline: 'none',
           padding: 0,
         }}
-        onMouseEnter={e => {
-          (e.currentTarget as HTMLElement).style.transform = 'scale(1.1)';
-          (e.currentTarget as HTMLElement).style.boxShadow = '0 6px 24px rgba(0,0,0,0.6)';
-        }}
-        onMouseLeave={e => {
-          (e.currentTarget as HTMLElement).style.transform = 'scale(1)';
-          (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 20px rgba(0,0,0,0.5)';
-        }}
+        onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(1.08)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 6px 24px rgba(0,0,0,0.55)'; }}
+        onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(1)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 18px rgba(0,0,0,0.45)'; }}
       >
-        {/* Multi-color icon matching the screenshot */}
-        <ThemePaletteIcon />
+        {/* 2×2 swatch grid from the active theme */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3px', padding: '2px' }}>
+          {activeTheme.swatches.map((color, i) => (
+            <div
+              key={i}
+              style={{
+                width: '10px',
+                height: '10px',
+                borderRadius: '3px',
+                background: color,
+              }}
+            />
+          ))}
+        </div>
       </button>
 
-      {/* Animation keyframes */}
       <style>{`
-        @keyframes themePanelIn {
-          from { opacity: 0; transform: translateY(8px) scale(0.96); }
+        @keyframes tsPanelIn {
+          from { opacity: 0; transform: translateY(8px) scale(0.95); }
           to   { opacity: 1; transform: translateY(0) scale(1); }
         }
       `}</style>
@@ -221,51 +181,10 @@ export function ThemeSelector() {
   );
 }
 
-/** 4-quadrant palette icon — mirrors the screenshot FAB exactly */
-function ThemePaletteIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-      {/* top-left: red */}
-      <circle cx="7"  cy="7"  r="5" fill="#ef4444" />
-      {/* top-right: green */}
-      <circle cx="15" cy="7"  r="5" fill="#22c55e" />
-      {/* bottom-left: blue */}
-      <circle cx="7"  cy="15" r="5" fill="#3b82f6" />
-      {/* bottom-right: yellow */}
-      <circle cx="15" cy="15" r="5" fill="#eab308" />
-    </svg>
-  );
-}
-
-// Per-theme card visual styles
-const THEME_CARD_STYLES: Record<ThemeId, {
-  bg: string;
-  border: string;
-  textColor: string;
-  checkColor: string;
-}> = {
-  dark: {
-    bg: 'rgba(27,32,62,0.7)',
-    border: '#16f2b3',
-    textColor: '#e2e8f0',
-    checkColor: '#16f2b3',
-  },
-  light: {
-    bg: '#ffffff',
-    border: '#7c3aed',
-    textColor: '#1e293b',
-    checkColor: '#7c3aed',
-  },
-  aqua: {
-    bg: '#cffafa',
-    border: '#0d9488',
-    textColor: '#134e4a',
-    checkColor: '#0d9488',
-  },
-  retro: {
-    bg: '#fef3c7',
-    border: '#d97706',
-    textColor: '#3b2a1a',
-    checkColor: '#d97706',
-  },
+// Per-theme card visual styles (all hardcoded so panel stays legible regardless of page theme)
+const CARD_STYLES: Record<ThemeId, { bg: string; border: string; textColor: string }> = {
+  dark:  { bg: 'rgba(27,32,62,0.8)',  border: '#16f2b3', textColor: '#e2e8f0' },
+  light: { bg: '#f8fafc',             border: '#7c3aed', textColor: '#1e293b' },
+  aqua:  { bg: '#cffafa',             border: '#0d9488', textColor: '#134e4a' },
+  retro: { bg: '#fef3c7',             border: '#d97706', textColor: '#3b2a1a' },
 };
