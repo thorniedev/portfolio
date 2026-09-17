@@ -49,12 +49,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  const dynamicRoutes: MetadataRoute.Sitemap = articles.map((article) => ({
-    url: article.canonical_url || `${SITE_URL}/blog#article-${article.id}`,
-    lastModified: article.published_at ? new Date(article.published_at) : now,
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
-  }));
+  // Only include articles that have a real canonical URL (not a hash fragment)
+  // Google ignores URLs with # fragments in sitemaps
+  const dynamicRoutes: MetadataRoute.Sitemap = articles
+    .filter((article) => article.canonical_url && !article.canonical_url.includes('#'))
+    .map((article) => ({
+      url: article.canonical_url!,
+      lastModified: article.published_at ? new Date(article.published_at) : now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    }));
 
   return [...staticRoutes, ...dynamicRoutes];
 }

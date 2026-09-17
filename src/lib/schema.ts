@@ -26,9 +26,15 @@ export function generatePersonSchema(
     alternateName: ['Thornie', 'ThornieDev', 'Chanthorn Kim', 'គីម ចាន់ថន', 'ចាន់ថន គីម'],
     givenName: 'Chanthorn',
     familyName: 'Kim',
-    jobTitle: 'Full-Stack Developer',
+    jobTitle: 'Full-Stack Software Developer',
     description: header.description,
-    image: `${siteUrl}/profile.png`,
+    image: {
+      '@type': 'ImageObject',
+      url: `${siteUrl}/thornie.webp`,
+      width: 350,
+      height: 350,
+      caption: 'Kim Chanthorn (ThornieDev) — Full-Stack Developer Cambodia',
+    },
     url: siteUrl,
     email: contacts.email,
     nationality: {
@@ -57,6 +63,8 @@ export function generatePersonSchema(
     sameAs,
     knowsAbout: [
       'Web Development',
+      'Full-Stack Development',
+      'Backend Architecture',
       'Computer Science',
       'Information Technology',
       'TypeScript',
@@ -65,23 +73,37 @@ export function generatePersonSchema(
       'React',
       'Java',
       'Spring Boot',
-      'Full-Stack Development',
-      'Backend Architecture',
+      'Node.js',
+      'NestJS',
       'Docker',
       'PostgreSQL',
       'AWS',
-      'Node.js',
-      'NestJS',
+      'Microservices',
+      'REST API',
+      'CI/CD',
       ...skills,
     ],
+    hasOccupation: {
+      '@type': 'Occupation',
+      name: 'Full-Stack Software Developer',
+      occupationLocation: {
+        '@type': 'Country',
+        name: 'Cambodia',
+      },
+      estimatedSalary: null,
+      skills: skills.join(', '),
+    },
     worksFor: {
       '@type': 'Organization',
       name: 'Freelance / Self-Employed',
     },
+    // Awards / recognition signals
+    award: 'ISTAD ITE Generation 3 Student',
   };
 }
 
 export function generateProfilePageSchema(siteUrl: string, personSchema: object) {
+  const now = new Date().toISOString();
   return {
     '@context': 'https://schema.org',
     '@type': 'ProfilePage',
@@ -90,6 +112,9 @@ export function generateProfilePageSchema(siteUrl: string, personSchema: object)
     name: 'Kim Chanthorn (ThornieDev) — Full-Stack Developer Cambodia | Khmer Dev Portfolio',
     description:
       'Portfolio of Kim Chanthorn, a full-stack software developer based in Phnom Penh, Cambodia. Specializing in Next.js, TypeScript, Java, and Spring Boot.',
+    datePublished: '2024-01-01',
+    dateModified: now,
+    inLanguage: ['en-US', 'km'],
     mainEntity: personSchema,
     breadcrumb: {
       '@type': 'BreadcrumbList',
@@ -112,8 +137,10 @@ export function generateWebSiteSchema(siteUrl: string) {
     '@id': `${siteUrl}/#website`,
     url: siteUrl,
     name: 'Kim Chanthorn — ThornieDev Portfolio',
+    alternateName: 'chanthorndev.site',
     description:
-      'Personal portfolio of Kim Chanthorn (Thornie / ThornieDev), a full-stack developer and Khmer dev based in Cambodia.',
+      'Personal portfolio of Kim Chanthorn (Thornie / ThornieDev), a full-stack developer and Khmer dev based in Phnom Penh, Cambodia.',
+    inLanguage: ['en-US', 'km'],
     author: {
       '@id': `${siteUrl}/#person`,
     },
@@ -130,20 +157,25 @@ export function generateCreativeWorkSchema(projects: Project[], siteUrl: string)
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     name: "Kim Chanthorn's Projects — ThornieDev",
-    description: 'Featured projects and open-source work by Kim Chanthorn (ThornieDev), Cambodian full-stack developer.',
+    description:
+      'Featured projects and open-source work by Kim Chanthorn (ThornieDev), Cambodian full-stack developer.',
+    numberOfItems: projects.length,
     itemListElement: projects.map((project, index) => ({
       '@type': 'ListItem',
       position: index + 1,
       item: {
-        '@type': 'CreativeWork',
+        '@type': 'SoftwareSourceCode',
         name: project.projectName,
         description: project.projectDesc,
+        programmingLanguage: project.tags,
         keywords: project.tags.join(', '),
         url: project.demo || project.code || siteUrl,
+        codeRepository: project.code || null,
         author: {
           '@type': 'Person',
           name: 'Kim Chanthorn',
           alternateName: 'ThornieDev',
+          url: siteUrl,
         },
       },
     })),
@@ -157,8 +189,10 @@ export function generateTechArticleSchema(article: BlogPost, siteUrl: string) {
     headline: article.title,
     description: article.description,
     datePublished: article.published_at || article.date,
+    dateModified: article.published_at || article.date,
     url: article.canonical_url || article.url || `${siteUrl}/blog`,
     image: article.cover_image || article.image,
+    inLanguage: 'en-US',
     author: {
       '@type': 'Person',
       name: 'Kim Chanthorn',
@@ -170,5 +204,59 @@ export function generateTechArticleSchema(article: BlogPost, siteUrl: string) {
       name: 'Kim Chanthorn',
       url: siteUrl,
     },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': article.canonical_url || `${siteUrl}/blog`,
+    },
+  };
+}
+
+/** FAQ rich snippet for homepage — boosts "People also ask" appearance */
+export function generateFAQSchema(siteUrl: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'Who is Kim Chanthorn (ThornieDev)?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Kim Chanthorn, also known as Thornie or ThornieDev, is a full-stack software developer based in Phnom Penh, Cambodia. He specializes in Next.js, TypeScript, Java, and Spring Boot, and is a student at ISTAD (Institute of Science and Technology Advanced Development) and RUPP (Royal University of Phnom Penh).',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What technologies does Kim Chanthorn use?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Kim Chanthorn (ThornieDev) specializes in Next.js, React, TypeScript, JavaScript, Java, Spring Boot, Node.js, NestJS, PostgreSQL, MongoDB, Docker, and AWS. He builds high-performance full-stack web applications and cloud-native backend systems.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Where is Kim Chanthorn located?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Kim Chanthorn (Thornie / ThornieDev) is based in Phnom Penh, Cambodia. He is a Khmer developer actively building web applications and backend systems from Southeast Asia.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'How can I contact Kim Chanthorn?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: `You can reach Kim Chanthorn (ThornieDev) through his portfolio at ${siteUrl}, on GitHub, LinkedIn, or Twitter @thorniedev.`,
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What is chanthorndev.site?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'chanthorndev.site is the personal developer portfolio of Kim Chanthorn (ThornieDev), a full-stack software developer from Cambodia. It showcases his projects, technical skills, blog articles, and work experience.',
+        },
+      },
+    ],
   };
 }

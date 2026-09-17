@@ -231,6 +231,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" dir="ltr" suppressHydrationWarning>
       <head>
+        {/* ── Preconnect to external origins for faster LCP ───────────────── */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://dev.to" />
+        <link rel="preconnect" href="https://media.dev.to" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://media2.dev.to" crossOrigin="anonymous" />
+        {/* og:locale:alternate for Khmer language users in Cambodia */}
+        <meta property="og:locale:alternate" content="km_KH" />
         {/* ── Person Schema ───────────────────────────────────────────────── */}
         <script
           type="application/ld+json"

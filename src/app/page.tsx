@@ -11,7 +11,7 @@ import { BlogSection } from '@/components/sections/blog-section';
 import { Contacts } from '@/components/sections/contacts';
 import { getDevToArticles } from '@/lib/devto';
 import { projectsData } from '@/data/projects-data';
-import { generateCreativeWorkSchema } from '@/lib/schema';
+import { generateCreativeWorkSchema, generateFAQSchema } from '@/lib/schema';
 
 // ─── Page-level Metadata ─────────────────────────────────────────────────────
 // (Merges with root layout metadata via the %s template)
@@ -42,13 +42,18 @@ async function StreamedBlogFeed() {
 export default async function HomePage() {
   const SITE_URL = 'https://chanthorndev.site';
   const creativeWorkSchema = generateCreativeWorkSchema(projectsData, SITE_URL);
+  const faqSchema = generateFAQSchema(SITE_URL);
 
   return (
     <>
-      {/* ── Structured Data for Projects ────────────────────────────────── */}
+      {/* ── Structured Data ──────────────────────────────────────────────── */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(creativeWorkSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
       {/* ── Visible Sections ────────────────────────────────────────────── */}
