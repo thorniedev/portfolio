@@ -31,6 +31,24 @@
     background: rgba(22, 242, 179, 0.2);
     color: #16f2b3;
   }
+
+  /* Hide Netlify Drawer / HUD badge */
+  [data-netlify-drawer],
+  [data-nf-variant],
+  netlify-drawer,
+  #netlify-drawer,
+  .netlify-badge,
+  iframe[id*="netlify-drawer"],
+  iframe[src*="netlify"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    left: -9999px !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
 }
 
 @layer utilities {
