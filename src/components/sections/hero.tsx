@@ -25,9 +25,8 @@ export function Hero() {
             <TypedText
               strings={[
                 'Full-Stack Developer.',
-                'Khmer Dev.',
-                'Backend Engineer.',
-                'Next.js Specialist.',
+                'Software Engineer.',
+                'DevOps Engineer.'
               ]}
             />
           </h1>
