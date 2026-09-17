@@ -9,7 +9,9 @@ import { Projects } from '@/components/sections/projects';
 import { Education } from '@/components/sections/education';
 import { BlogSection } from '@/components/sections/blog-section';
 import { Contacts } from '@/components/sections/contacts';
+import { GitActivity } from '@/components/sections/git-activity';
 import { getDevToArticles } from '@/lib/devto';
+import { getGitHubUser, getGitHubRecentEvents, getGitHubRepos } from '@/lib/github';
 import { projectsData } from '@/data/projects-data';
 import { generateCreativeWorkSchema, generateFAQSchema } from '@/lib/schema';
 
@@ -43,6 +45,13 @@ export default async function HomePage() {
   const SITE_URL = 'https://chanthorndev.site';
   const creativeWorkSchema = generateCreativeWorkSchema(projectsData, SITE_URL);
   const faqSchema = generateFAQSchema(SITE_URL);
+
+  const githubUser = contactsData.githubUsername || 'thorniedev';
+  const [gitUser, gitEvents, gitRepos] = await Promise.all([
+    getGitHubUser(githubUser),
+    getGitHubRecentEvents(githubUser),
+    getGitHubRepos(githubUser),
+  ]);
 
   return (
     <>
@@ -84,6 +93,14 @@ export default async function HomePage() {
           Featured Projects by ThornieDev — Full-Stack Developer Cambodia
         </h2>
         <Projects />
+      </section>
+
+      {/* GitHub Activity & Contributions */}
+      <section aria-label="GitHub Activity and Open Source Contributions of Kim Chanthorn (ThornieDev)">
+        <h2 className="sr-only">
+          GitHub Activity, Contribution Heatmap Calendar, and Commits — ThornieDev
+        </h2>
+        <GitActivity user={gitUser} events={gitEvents} repos={gitRepos} />
       </section>
 
       {/* Education */}

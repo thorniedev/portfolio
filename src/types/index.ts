@@ -53,6 +53,7 @@ export interface ContactsData {
   medium: string;
   stackOverflow: string;
   devUsername: string;
+  githubUsername?: string;
 }
 
 export interface SocialsData {
