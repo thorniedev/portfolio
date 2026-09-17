@@ -24,7 +24,7 @@ export function Contacts() {
   };
 
   const inputClass =
-    'w-full rounded-md border border-[#353a52] bg-[#10172d] px-3 py-2 text-sm text-white placeholder:text-gray-500 focus:border-violet-500 focus:outline-none transition-colors';
+    'w-full rounded-md border border-[#353a52] bg-[#10172d] px-3 py-2 text-sm text-white placeholder:text-gray-400 focus:border-violet-500 focus:outline-none transition-colors';
 
   return (
     <div id="contact" className="relative z-50 border-t my-12 lg:my-24 border-[#25213b]">
@@ -39,7 +39,7 @@ export function Contacts() {
       <div className="flex justify-center my-5 lg:py-8">
         <div className="flex items-center">
           <span className="w-24 h-[2px] bg-[#1a1443]" />
-          <span className="bg-[#1a1443] w-fit text-white p-2 px-5 text-xl rounded-md">Contact</span>
+          <h2 className="bg-[#1a1443] w-fit text-white p-2 px-5 text-xl rounded-md">Contact</h2>
           <span className="w-24 h-[2px] bg-[#1a1443]" />
         </div>
       </div>
@@ -48,7 +48,7 @@ export function Contacts() {
         {/* LEFT: Contact info */}
         <div className="flex flex-col gap-5 text-gray-300">
           <p className="text-[#16f2b3] text-xl font-medium uppercase">Let&apos;s Connect</p>
-          <p className="text-sm lg:text-base">
+          <p className="text-sm lg:text-base text-gray-300">
             Have a project or opportunity? I&apos;d love to hear from you.
           </p>
           <div className="flex flex-col gap-3">
@@ -97,8 +97,11 @@ export function Contacts() {
               )}
 
               <div>
-                <label className="text-xs text-gray-400 uppercase tracking-wider block mb-1">Your Name</label>
+                <label htmlFor="contact-name" className="text-xs text-gray-300 font-medium uppercase tracking-wider block mb-1">
+                  Your Name
+                </label>
                 <input
+                  id="contact-name"
                   type="text"
                   required
                   value={formData.name}
@@ -108,8 +111,11 @@ export function Contacts() {
                 />
               </div>
               <div>
-                <label className="text-xs text-gray-400 uppercase tracking-wider block mb-1">Email</label>
+                <label htmlFor="contact-email" className="text-xs text-gray-300 font-medium uppercase tracking-wider block mb-1">
+                  Email
+                </label>
                 <input
+                  id="contact-email"
                   type="email"
                   required
                   value={formData.email}
@@ -119,8 +125,11 @@ export function Contacts() {
                 />
               </div>
               <div>
-                <label className="text-xs text-gray-400 uppercase tracking-wider block mb-1">Message</label>
+                <label htmlFor="contact-message" className="text-xs text-gray-300 font-medium uppercase tracking-wider block mb-1">
+                  Message
+                </label>
                 <textarea
+                  id="contact-message"
                   required
                   rows={4}
                   value={formData.message}
@@ -132,6 +141,7 @@ export function Contacts() {
               <button
                 type="submit"
                 disabled={status === 'loading'}
+                aria-label="Send Message"
                 className="flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-pink-500 px-8 py-3 text-sm font-semibold uppercase tracking-wider text-white transition-all duration-300 hover:from-pink-500 hover:to-violet-600 disabled:opacity-60"
               >
                 {status === 'loading' ? 'Sending...' : 'Send Message'}
@@ -143,3 +153,4 @@ export function Contacts() {
     </div>
   );
 }
+

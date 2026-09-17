@@ -17,7 +17,7 @@ export function About() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
         {/* LEFT: Text */}
         <div className="order-2 lg:order-1">
-          <p className="font-medium mb-5 text-[#16f2b3] text-xl uppercase">Who I am?</p>
+          <h2 className="font-medium mb-5 text-[#16f2b3] text-xl uppercase">Who I am?</h2>
           <p className="text-gray-200 text-sm lg:text-lg">
             {aboutData.description1}
           </p>
@@ -31,10 +31,11 @@ export function About() {
         {/* RIGHT: Profile Photo */}
         <div className="flex justify-center order-1 lg:order-2">
           <Image
-            alt={headerData.name}
+            alt="Kim Chanthorn (ThornieDev) — Full-Stack Developer Cambodia"
             loading="lazy"
             width={280}
             height={280}
+            sizes="(max-width: 768px) 100vw, 280px"
             className="rounded-lg transition-all duration-1000 grayscale hover:grayscale-0 hover:scale-110 cursor-pointer"
             style={{ width: 'auto', height: 'auto' }}
             src={headerData.image}

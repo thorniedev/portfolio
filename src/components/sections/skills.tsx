@@ -5,7 +5,7 @@ import { skillsData } from '@/data/skills-data';
 function SkillTag({ name }: { name: string }) {
   return (
     <div className="w-36 min-w-fit h-fit flex items-center justify-center rounded-lg transition-all duration-500 py-2 px-3 text-center group-hover:-translate-y-[4px] cursor-pointer group bg-[#10172d] border border-[#1f223c] hover:border-violet-500">
-      <span className="text-sm transition-all duration-500 text-[#d3d8e8] group-hover:text-violet-500">
+      <span className="text-sm transition-all duration-500 text-gray-200 group-hover:text-violet-400 font-medium">
         {name}
       </span>
     </div>
@@ -34,7 +34,7 @@ export function Skills() {
       <div className="flex justify-center my-5 lg:py-8">
         <div className="flex items-center">
           <span className="w-24 h-[2px] bg-[#1a1443]" />
-          <span className="bg-[#1a1443] w-fit text-white p-2 px-5 text-xl rounded-md">Skills</span>
+          <h2 className="bg-[#1a1443] w-fit text-white p-2 px-5 text-xl rounded-md">Skills</h2>
           <span className="w-24 h-[2px] bg-[#1a1443]" />
         </div>
       </div>

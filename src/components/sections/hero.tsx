@@ -33,7 +33,7 @@ export function Hero() {
           </h1>
 
           {/* Tagline — natural keyword in visible text */}
-          <p className="mt-4 text-sm text-gray-400 max-w-md">
+          <p className="mt-4 text-sm text-gray-300 max-w-md">
             Full-stack software developer based in{' '}
             <span className="text-[#16f2b3] font-medium">Phnom Penh, Cambodia</span>
             {' '}— building high-performance web applications and backend systems.
@@ -45,64 +45,66 @@ export function Hero() {
               <a target="_blank" rel="noopener noreferrer"
                 className="transition-all text-pink-500 hover:scale-125 duration-300"
                 href={socialsData.github} aria-label="Kim Chanthorn on GitHub">
-                <FaGithub size={30} />
+                <FaGithub size={30} aria-hidden="true" />
               </a>
             )}
             {socialsData.linkedIn && (
               <a target="_blank" rel="noopener noreferrer"
                 className="transition-all text-pink-500 hover:scale-125 duration-300"
                 href={socialsData.linkedIn} aria-label="Kim Chanthorn on LinkedIn">
-                <FaLinkedin size={30} />
+                <FaLinkedin size={30} aria-hidden="true" />
               </a>
             )}
             {socialsData.facebook && (
               <a target="_blank" rel="noopener noreferrer"
                 className="transition-all text-pink-500 hover:scale-125 duration-300"
-                href={socialsData.facebook} aria-label="ThornieDev on Facebook">
-                <FaFacebook size={30} />
+                href={socialsData.facebook} aria-label="Kim Chanthorn on Facebook">
+                <FaFacebook size={30} aria-hidden="true" />
               </a>
             )}
             <a target="_blank" rel="noopener noreferrer"
               className="transition-all text-pink-500 hover:scale-125 duration-300"
-              href="https://t.me/thorniedev" aria-label="Thornie on Telegram">
-              <FaTelegram size={30} />
+              href="https://t.me/thorniedev" aria-label="Kim Chanthorn on Telegram">
+              <FaTelegram size={30} aria-hidden="true" />
             </a>
             {socialsData.twitter && (
               <a target="_blank" rel="noopener noreferrer"
                 className="transition-all text-pink-500 hover:scale-125 duration-300"
-                href={socialsData.twitter} aria-label="ThornieDev on Twitter/X">
-                <FaTwitter size={30} />
+                href={socialsData.twitter} aria-label="Kim Chanthorn on Twitter">
+                <FaTwitter size={30} aria-hidden="true" />
               </a>
             )}
             <a target="_blank" rel="noopener noreferrer"
               className="transition-all text-pink-500 hover:scale-125 duration-300"
               href="https://leetcode.com/thornie/" aria-label="Kim Chanthorn on LeetCode">
-              <SiLeetcode size={28} />
+              <SiLeetcode size={28} aria-hidden="true" />
             </a>
           </div>
 
           {/* CTA Buttons */}
           <div className="flex items-center gap-3">
             <Link
-              className="bg-gradient-to-r to-pink-500 from-violet-600 p-[1px] rounded-full transition-all duration-300 hover:from-pink-500 hover:to-violet-600"
+              className="bg-gradient-to-r to-pink-500 from-violet-600 p-[1px] rounded-full transition-all duration-300 hover:from-pink-500 hover:to-violet-600 flex items-center"
               href="#contact"
+              aria-label="Contact Kim Chanthorn"
             >
-              <button className="px-3 text-xs md:px-8 py-3 md:py-4 bg-[#0d1224] rounded-full border-none text-center md:text-sm font-medium uppercase tracking-wider text-white no-underline transition-all duration-200 ease-out md:font-semibold flex items-center gap-1 hover:gap-3">
+              <span className="px-3 text-xs md:px-8 py-3 md:py-4 bg-[#0d1224] rounded-full border-none text-center md:text-sm font-medium uppercase tracking-wider text-white no-underline transition-all duration-200 ease-out md:font-semibold flex items-center gap-1 hover:gap-3">
                 <span>Contact me</span>
-                <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" height="16" width="16" xmlns="http://www.w3.org/2000/svg">
+                <svg aria-hidden="true" stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" height="16" width="16" xmlns="http://www.w3.org/2000/svg">
                   <path d="M2 22C2 17.5817 5.58172 14 10 14C14.4183 14 18 17.5817 18 22H2ZM10 13C6.685 13 4 10.315 4 7C4 3.685 6.685 1 10 1C13.315 1 16 3.685 16 7C16 10.315 13.315 13 10 13ZM20 17H24V19H20V17ZM17 12H24V14H17V12ZM19 7H24V9H19V7Z" />
                 </svg>
-              </button>
+              </span>
             </Link>
 
             {headerData.resumePdf && (
               <a
                 className="flex items-center gap-1 hover:gap-3 rounded-full bg-gradient-to-r from-pink-500 to-violet-600 px-3 md:px-8 py-3 md:py-4 text-center text-xs md:text-sm font-medium uppercase tracking-wider text-white no-underline transition-all duration-200 ease-out hover:text-white hover:no-underline md:font-semibold"
-                role="button" target="_blank" rel="noopener noreferrer"
+                target="_blank" rel="noopener noreferrer"
                 href={headerData.resumePdf}
+                aria-label="Kim Chanthorn's Resume (PDF)"
               >
                 <span>Get Resume</span>
-                <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" height="16" width="16" xmlns="http://www.w3.org/2000/svg">
+                <svg aria-hidden="true" stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" height="16" width="16" xmlns="http://www.w3.org/2000/svg">
                   <path fill="none" d="M0 0h24v24H0z" />
                   <path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z" />
                 </svg>

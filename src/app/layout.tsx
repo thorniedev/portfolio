@@ -16,14 +16,14 @@ import '@/styles/globals.css';
 
 const poppins = Poppins({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800'],
+  weight: ['400', '500', '600', '700'],
   variable: '--font-sans',
   display: 'swap',
 });
 
 const outfit = Outfit({
   subsets: ['latin'],
-  weight: ['500', '600', '700', '800'],
+  weight: ['600', '700'],
   variable: '--font-heading',
   display: 'swap',
 });
@@ -47,6 +47,9 @@ export const metadata: Metadata = {
     // Direct Names & Aliases
     'Kim Chanthorn',
     'Chanthorn Kim',
+    'Mr. Kim Chanthorn',
+    'Mr. Chanthorn Kim',
+    'Mr. thorniedev',
     'Thornie',
     'ThornieDev',
     'Chanthorn',
@@ -74,6 +77,7 @@ export const metadata: Metadata = {
     'RUPP Computer Science',
     'RUPP FE',
     'IT student',
+    'ITE student',
     'IT student Cambodia',
     'Cambodia IT student',
     'Computer Science student Cambodia',
@@ -111,6 +115,7 @@ export const metadata: Metadata = {
     'និស្សិត IT',
     'និស្សិតកុំព្យូទ័រ',
     'សាកលវិទ្យាល័យភូមិន្ទភ្នំពេញ',
+    'សាកលវិទ្យាស្ថានISTAD',
     'អ្នកអភិវឌ្ឍន៍វេបសាយ',
     'អ្នកសរសេរកូដខ្មែរ',
     'អ្នកសរសេរកម្មវិធី',
@@ -241,11 +246,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className={`${poppins.variable} ${outfit.variable} font-sans antialiased`}>
-        <main className="min-h-screen relative mx-auto px-6 sm:px-12 lg:max-w-[70rem] xl:max-w-[76rem] 2xl:max-w-[92rem] text-white">
-          <Navbar />
-          {children}
+        <div className="min-h-screen relative mx-auto px-6 sm:px-12 lg:max-w-[70rem] xl:max-w-[76rem] 2xl:max-w-[92rem] text-white">
+          <header>
+            <Navbar />
+          </header>
+          <main id="main-content">
+            {children}
+          </main>
           <Footer />
-        </main>
+        </div>
         <BackToTop />
       </body>
     </html>

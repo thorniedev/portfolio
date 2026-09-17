@@ -10,7 +10,8 @@ export function Experience() {
     <div id="experience" className="relative z-50 border-t my-12 lg:my-24 border-[#25213b]">
       <Image
         src="/section.svg"
-        alt="Hero"
+        alt=""
+        aria-hidden="true"
         width={1572}
         height={795}
         className="absolute top-0 -z-10"
@@ -20,7 +21,7 @@ export function Experience() {
       <div className="flex justify-center my-5 lg:py-8">
         <div className="flex items-center">
           <span className="w-24 h-[2px] bg-[#1a1443]" />
-          <span className="bg-[#1a1443] w-fit text-white p-2 px-5 text-xl rounded-md">Experiences</span>
+          <h2 className="bg-[#1a1443] w-fit text-white p-2 px-5 text-xl rounded-md">Experiences</h2>
           <span className="w-24 h-[2px] bg-[#1a1443]" />
         </div>
       </div>
@@ -45,7 +46,8 @@ export function Experience() {
                   <div className="p-3 relative">
                     <Image
                       src="/blur-23.svg"
-                      alt="Card Glow"
+                      alt=""
+                      aria-hidden="true"
                       width={1080}
                       height={200}
                       className="absolute bottom-0 opacity-80 pointer-events-none"

@@ -51,15 +51,6 @@ export default async function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(creativeWorkSchema) }}
       />
 
-      {/*
-       * ── SEO Semantic Anchors ───────────────────────────────────────────
-       * These headings are visually hidden but fully indexed by crawlers.
-       * They reinforce the keyword cluster for Kim Chanthorn / ThornieDev.
-       */}
-      <h1 className="sr-only">
-        Kim Chanthorn — Full-Stack Developer &amp; Khmer Dev Based in Cambodia
-      </h1>
-
       {/* ── Visible Sections ────────────────────────────────────────────── */}
       <Hero />
 

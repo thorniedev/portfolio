@@ -32,7 +32,7 @@ export function BlogSection({ blogs }: { blogs: BlogPost[] }) {
       <div className="flex justify-center my-5 lg:py-8">
         <div className="flex items-center">
           <span className="w-24 h-[2px] bg-[#1a1443]" />
-          <span className="bg-[#1a1443] w-fit text-white p-2 px-5 text-xl rounded-md">Blogs</span>
+          <h2 className="bg-[#1a1443] w-fit text-white p-2 px-5 text-xl rounded-md">Blogs</h2>
           <span className="w-24 h-[2px] bg-[#1a1443]" />
         </div>
       </div>
@@ -54,7 +54,7 @@ export function BlogSection({ blogs }: { blogs: BlogPost[] }) {
                 {imageUrl && (
                   <div className="h-44 lg:h-52 w-auto cursor-pointer overflow-hidden rounded-t-lg">
                     <Image
-                      alt={blog.title}
+                      alt={`Cover image for ${blog.title}`}
                       loading="lazy"
                       width={1920}
                       height={1080}
@@ -70,19 +70,19 @@ export function BlogSection({ blogs }: { blogs: BlogPost[] }) {
                     <div className="flex items-center gap-3">
                       {blog.positive_reactions_count != null && (
                         <p className="flex items-center gap-1">
-                          <BsHeart />
+                          <BsHeart aria-hidden="true" />
                           <span>{blog.positive_reactions_count}</span>
                         </p>
                       )}
                       {blog.comments_count != null && (
                         <p className="flex items-center gap-1">
-                          <BsChat />
+                          <BsChat aria-hidden="true" />
                           <span>{blog.comments_count}</span>
                         </p>
                       )}
                     </div>
                   </div>
-                  <a target="_blank" rel="noopener noreferrer" href={articleUrl}>
+                  <a target="_blank" rel="noopener noreferrer" href={articleUrl} aria-label={`Read article: ${blog.title}`}>
                     <p className="my-2 lg:my-3 cursor-pointer text-lg text-white sm:text-xl font-medium hover:text-violet-500 transition-colors">
                       {blog.title}
                     </p>
@@ -90,7 +90,7 @@ export function BlogSection({ blogs }: { blogs: BlogPost[] }) {
                   {blog.reading_time_minutes && (
                     <p className="mb-2 text-sm text-[#16f2b3]">{blog.reading_time_minutes} Min Read</p>
                   )}
-                  <p className="text-sm lg:text-base text-[#d3d8e8] pb-3 lg:pb-6 line-clamp-3">
+                  <p className="text-sm lg:text-base text-gray-300 pb-3 lg:pb-6 line-clamp-3">
                     {blog.description}
                   </p>
                 </div>

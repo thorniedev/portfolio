@@ -4,12 +4,23 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 
 export function TypedText({ strings }: { strings: string[] }) {
-  const [currentText, setCurrentText] = useState('');
+  const initialText = strings[0] || 'Full-Stack Developer.';
+  const [currentText, setCurrentText] = useState(initialText);
   const [stringIndex, setStringIndex] = useState(0);
-  const [charIndex, setCharIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(initialText.length);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
 
   useEffect(() => {
+    // Hold the initial title for 2 seconds before starting the deletion/typing cycle
+    if (!hasStarted) {
+      const initialTimer = setTimeout(() => {
+        setHasStarted(true);
+        setIsDeleting(true);
+      }, 2000);
+      return () => clearTimeout(initialTimer);
+    }
+
     const currentString = strings[stringIndex % strings.length];
     const typingSpeed = isDeleting ? 40 : 80;
 
@@ -33,12 +44,13 @@ export function TypedText({ strings }: { strings: string[] }) {
     }, typingSpeed);
 
     return () => clearTimeout(timer);
-  }, [charIndex, isDeleting, stringIndex, strings]);
+  }, [charIndex, hasStarted, isDeleting, stringIndex, strings]);
 
   return (
     <span className="text-[#16f2b3]">
       {currentText}
-      <span className="animate-pulse">|</span>
+      <span className="animate-pulse" aria-hidden="true">|</span>
     </span>
   );
 }
+
