@@ -11,8 +11,8 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        // Block internal Next.js/API routes from indexing
-        disallow: ['/api/', '/_next/', '/static/'],
+        // Block API routes from indexing, allow all page assets
+        disallow: ['/api/'],
       },
     ],
     sitemap: 'https://chanthorndev.site/sitemap.xml',
