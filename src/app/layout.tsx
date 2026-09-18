@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
 
   title: {
-    default: 'Kim Chanthorn (Thornie) | Full-Stack Developer Cambodia | Khmer Dev',
+    default: 'Kim Chanthorn (ThornieDev) — Official Portfolio & Developer',
     template: '%s | Kim Chanthorn',
   },
 

@@ -18,7 +18,7 @@ import { generateCreativeWorkSchema, generateFAQSchema } from '@/lib/schema';
 // ─── Page-level Metadata ─────────────────────────────────────────────────────
 // (Merges with root layout metadata via the %s template)
 export const metadata: Metadata = {
-  title: 'Kim Chanthorn (Thornie) | Full-Stack Developer Cambodia | Khmer Dev',
+  title: 'Kim Chanthorn (ThornieDev) — Official Portfolio & Developer',
   description:
     'Kim Chanthorn (ThornieDev) — Full-stack software developer based in Phnom Penh, Cambodia. Khmer dev specializing in Next.js, TypeScript, Java, Spring Boot, and cloud-native systems.',
   alternates: {
