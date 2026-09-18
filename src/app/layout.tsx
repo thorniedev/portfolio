@@ -151,10 +151,10 @@ export const metadata: Metadata = {
       'Kim Chanthorn (ThornieDev) — Full-stack software developer based in Cambodia. Khmer dev building high-performance web applications and backend systems.',
     images: [
       {
-        url: '/opengraph-image',
-        width: 1200,
-        height: 630,
-        alt: 'Kim Chanthorn (ThornieDev) — Full-Stack Developer Cambodia',
+        url: '/og-image.png',
+        width: 1024,
+        height: 572,
+        alt: 'Kim Chanthorn (ThornieDev) — Full-Stack Developer & Engineer',
       },
     ],
   },
@@ -164,10 +164,10 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@thorniedev',
     creator: '@thorniedev',
-    title: 'Kim Chanthorn (Thornie) | Full-Stack Developer Cambodia',
+    title: 'Kim Chanthorn (Thornie) | Full-Stack Developer & Engineer',
     description:
       'Khmer dev building high-performance web apps and backend systems from Cambodia. TypeScript, Next.js, Java, Spring Boot.',
-    images: ['/opengraph-image'],
+    images: ['/og-image.png'],
   },
 
   // ── Robots / Indexing ───────────────────────────────────────────────────────

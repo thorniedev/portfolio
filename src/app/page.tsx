@@ -26,9 +26,17 @@ export const metadata: Metadata = {
   },
   openGraph: {
     url: 'https://chanthorndev.site',
-    title: 'Kim Chanthorn (Thornie) | Full-Stack Developer Cambodia',
+    title: 'Kim Chanthorn (Thornie) | Full-Stack Developer & Engineer',
     description:
       'Khmer dev building scalable web applications and backend systems from Cambodia. Portfolio of Kim Chanthorn (ThornieDev).',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1024,
+        height: 572,
+        alt: 'Kim Chanthorn (ThornieDev) — Full-Stack Developer & Engineer',
+      },
+    ],
   },
 };
 

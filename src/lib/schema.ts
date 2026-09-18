@@ -115,6 +115,13 @@ export function generateProfilePageSchema(siteUrl: string, personSchema: object)
     datePublished: '2024-01-01',
     dateModified: now,
     inLanguage: ['en-US', 'km'],
+    primaryImageOfPage: {
+      '@type': 'ImageObject',
+      url: `${siteUrl}/og-image.png`,
+      width: 1024,
+      height: 572,
+      caption: 'Kim Chanthorn (ThornieDev) — Full-Stack Developer & Engineer',
+    },
     mainEntity: personSchema,
     breadcrumb: {
       '@type': 'BreadcrumbList',
