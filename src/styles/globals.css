@@ -91,13 +91,14 @@
 
   /* ── Override hardcoded Tailwind white/gray text for non-dark themes ──────── */
   /* This keeps dark theme exactly as-is while making light/aqua/retro readable */
-  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) .text-white {
+  /* Elements inside .code-window are excluded — code cards must stay dark always */
+  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) .text-white:not(.code-window .text-white) {
     color: var(--color-text) !important;
   }
-  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) .text-gray-100,
-  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) .text-gray-200,
-  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) .text-gray-300,
-  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) .text-gray-400 {
+  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) .text-gray-100:not(.code-window .text-gray-100),
+  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) .text-gray-200:not(.code-window .text-gray-200),
+  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) .text-gray-300:not(.code-window .text-gray-300),
+  :is([data-theme="light"],[data-theme="aqua"],[data-theme="retro"]) .text-gray-400:not(.code-window .text-gray-400) {
     color: var(--color-muted) !important;
   }
 
