@@ -7,7 +7,7 @@ function ProjectCard({ project, index }: { project: (typeof projectsData)[0]; in
   return (
     <div id={`sticky-card-${index + 1}`} className="w-full mx-auto max-w-2xl sticky" style={{ top: `${(index + 1) * 40}px` }}>
       <div className="box-border flex items-center justify-center rounded shadow-[0_0_30px_0_rgba(0,0,0,0.3)] transition-all duration-[0.5s]">
-        <div className="from-[#0d1224] border-[#1b2c68a0] relative rounded-lg border bg-gradient-to-r to-[#0a0d37] w-full">
+        <div className="code-window from-[#0d1224] border-[#1b2c68a0] relative rounded-lg border bg-gradient-to-r to-[#0a0d37] w-full">
           {/* Top border gradient */}
           <div className="flex flex-row">
             <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-pink-500 to-violet-600" />
