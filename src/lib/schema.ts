@@ -23,20 +23,58 @@ export function generatePersonSchema(
     '@type': 'Person',
     '@id': `${siteUrl}/#person`,
     name: 'Kim Chanthorn',
-    alternateName: ['Thornie', 'ThornieDev', 'Chanthorn Kim', 'គីម ចាន់ថន', 'ចាន់ថន គីម'],
+    alternateName: ['Thornie', 'ThornieDev', 'Chanthorn Kim', 'Kim Chanthorn ThornieDev', 'គីម ចាន់ថន', 'ចាន់ថន គីម'],
     givenName: 'Chanthorn',
     familyName: 'Kim',
+    honorificPrefix: 'Mr.',
     jobTitle: 'Full-Stack Software Developer',
-    description: header.description,
-    image: {
-      '@type': 'ImageObject',
-      url: `${siteUrl}/thornie.webp`,
-      width: 350,
-      height: 350,
-      caption: 'Kim Chanthorn (ThornieDev) — Full-Stack Developer Cambodia',
-    },
+    description: 'Kim Chanthorn (ThornieDev) is a full-stack software developer and engineer from Phnom Penh, Cambodia, specializing in Next.js, TypeScript, Java, and Spring Boot. ISTAD ITE Generation 3 student and RUPP graduate. Known online as Thornie and ThornieDev.',
+    image: [
+      {
+        '@type': 'ImageObject',
+        '@id': `${siteUrl}/#personImage`,
+        url: `${siteUrl}/thornie.webp`,
+        width: 350,
+        height: 350,
+        caption: 'Kim Chanthorn (ThornieDev) — Full-Stack Developer & Engineer, Cambodia',
+        representativeOfPage: true,
+      },
+      {
+        '@type': 'ImageObject',
+        url: `${siteUrl}/og-image.png`,
+        width: 1024,
+        height: 572,
+        caption: 'Kim Chanthorn (ThornieDev) — Full-Stack Developer & Engineer',
+      },
+    ],
     url: siteUrl,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': siteUrl,
+      name: 'Kim Chanthorn (ThornieDev) — Official Portfolio',
+      url: siteUrl,
+    },
     email: contacts.email,
+    identifier: [
+      {
+        '@type': 'PropertyValue',
+        name: 'GitHub',
+        value: 'thorniedev',
+        url: 'https://github.com/thorniedev',
+      },
+      {
+        '@type': 'PropertyValue',
+        name: 'LinkedIn',
+        value: 'kim-chanthorn',
+        url: 'https://www.linkedin.com/in/kim-chanthorn',
+      },
+      {
+        '@type': 'PropertyValue',
+        name: 'dev.to',
+        value: 'thorniedev',
+        url: 'https://dev.to/thorniedev',
+      },
+    ],
     nationality: {
       '@type': 'Country',
       name: 'Cambodia',
@@ -44,19 +82,20 @@ export function generatePersonSchema(
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Phnom Penh',
+      addressRegion: 'Phnom Penh',
       addressCountry: 'KH',
     },
     alumniOf: [
       {
         '@type': 'EducationalOrganization',
         name: 'Institute of Science and Technology Advanced Development (ISTAD)',
-        alternateName: 'CSTAD',
+        alternateName: ['CSTAD', 'ISTAD Cambodia'],
         url: 'https://www.cstad.edu.kh',
       },
       {
         '@type': 'EducationalOrganization',
         name: 'Royal University of Phnom Penh (RUPP)',
-        alternateName: 'សាកលវិទ្យាល័យភូមិន្ទភ្នំពេញ',
+        alternateName: ['RUPP', 'សាកលវិទ្យាល័យភូមិន្ទភ្នំពេញ'],
         url: 'https://www.rupp.edu.kh',
       },
     ],
@@ -65,6 +104,7 @@ export function generatePersonSchema(
       'Web Development',
       'Full-Stack Development',
       'Backend Architecture',
+      'Software Engineering',
       'Computer Science',
       'Information Technology',
       'TypeScript',
@@ -77,10 +117,12 @@ export function generatePersonSchema(
       'NestJS',
       'Docker',
       'PostgreSQL',
+      'MongoDB',
       'AWS',
       'Microservices',
       'REST API',
       'CI/CD',
+      'DevOps',
       ...skills,
     ],
     hasOccupation: {
@@ -97,8 +139,12 @@ export function generatePersonSchema(
       '@type': 'Organization',
       name: 'Freelance / Self-Employed',
     },
-    // Awards / recognition signals
     award: 'ISTAD ITE Generation 3 Student',
+    memberOf: {
+      '@type': 'Organization',
+      name: 'ISTAD ITE Generation 3',
+      url: 'https://www.cstad.edu.kh',
+    },
   };
 }
 
@@ -262,6 +308,22 @@ export function generateFAQSchema(siteUrl: string) {
         acceptedAnswer: {
           '@type': 'Answer',
           text: 'chanthorndev.site is the personal developer portfolio of Kim Chanthorn (ThornieDev), a full-stack software developer from Cambodia. It showcases his projects, technical skills, blog articles, and work experience.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Is Kim Chanthorn (ThornieDev) the same as Chanthorn KIM on LinkedIn?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Kim Chanthorn (ThornieDev) — the developer behind chanthorndev.site — is a full-stack software developer and student at ISTAD and RUPP, Phnom Penh, Cambodia, known by the username ThornieDev. His LinkedIn profile is linkedin.com/in/kim-chanthorn.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What is Kim Chanthorn ThornieDev known for?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Kim Chanthorn, known as ThornieDev, is a software developer from Cambodia specializing in full-stack web development. He is an ITE Generation 3 student at ISTAD and a Computer Science student at RUPP, building web applications and backend systems using Next.js, TypeScript, Java, and Spring Boot. His portfolio is at chanthorndev.site.',
         },
       },
     ],

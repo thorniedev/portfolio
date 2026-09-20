@@ -38,12 +38,12 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
 
   title: {
-    default: 'Kim Chanthorn (ThornieDev) — Official Portfolio & Developer',
-    template: '%s | Kim Chanthorn',
+    default: 'Kim Chanthorn ThornieDev — Portfolio & Full-Stack Developer',
+    template: '%s | Kim Chanthorn (ThornieDev)',
   },
 
   description:
-    'Kim Chanthorn (ThornieDev) — Full-stack software developer based in Cambodia. Khmer dev building high-performance web applications and backend systems with Next.js, TypeScript, Java & Spring Boot.',
+    'Kim Chanthorn — also known as ThornieDev or Thornie — is a full-stack software developer from Phnom Penh, Cambodia. Specializing in Next.js, TypeScript, Java & Spring Boot. ISTAD ITE Generation 3 student.',
 
   keywords: [
     // Direct Names & Aliases
@@ -239,6 +239,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://media2.dev.to" crossOrigin="anonymous" />
         {/* og:locale:alternate for Khmer language users in Cambodia */}
         <meta property="og:locale:alternate" content="km_KH" />
+        {/* ── Entity / Authorship signals (Google Knowledge Graph) ────────── */}
+        {/* rel="me" tells Google these profiles belong to the same person   */}
+        <link rel="me" href="https://github.com/thorniedev" />
+        <link rel="me" href="https://www.linkedin.com/in/kim-chanthorn" />
+        <link rel="me" href="https://twitter.com/thorniedev" />
+        <link rel="author" href="https://github.com/thorniedev" />
         {/* ── Person Schema ───────────────────────────────────────────────── */}
         <script
           type="application/ld+json"
