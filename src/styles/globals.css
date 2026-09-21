@@ -220,4 +220,11 @@
     height: 1px;
     background: linear-gradient(to right, transparent, #7c3aed, transparent);
   }
+
+  /* Pause marquee animation on hover */
+  .marquee-track:hover,
+  .marquee-wrapper:hover .marquee-track {
+    animation-play-state: paused !important;
+  }
 }
+
