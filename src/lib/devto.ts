@@ -5,6 +5,7 @@ export async function getDevToArticles(username: string = 'said7388'): Promise<B
   try {
     const res = await fetch(`https://dev.to/api/articles?username=${username}`, {
       next: { revalidate: 3600 }, // ISR: Cache and revalidate hourly
+      signal: AbortSignal.timeout(3000),
       headers: {
         'Accept': 'application/json',
       },

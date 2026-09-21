@@ -120,6 +120,7 @@ export async function getGitHubUser(username: string = 'thorniedev'): Promise<Gi
   try {
     const res = await fetch(`https://api.github.com/users/${username}`, {
       headers: { Accept: 'application/vnd.github.v3+json' },
+      signal: AbortSignal.timeout(3000),
       next: { revalidate: 3600 },
     });
     if (!res.ok) return FALLBACK_USER;
@@ -145,6 +146,7 @@ export async function getGitHubRecentEvents(
   try {
     const res = await fetch(`https://api.github.com/users/${username}/events/public?per_page=12`, {
       headers: { Accept: 'application/vnd.github.v3+json' },
+      signal: AbortSignal.timeout(3000),
       next: { revalidate: 3600 },
     });
     if (!res.ok) return FALLBACK_EVENTS;
@@ -177,6 +179,7 @@ export async function getGitHubRepos(username: string = 'thorniedev'): Promise<G
   try {
     const res = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=8`, {
       headers: { Accept: 'application/vnd.github.v3+json' },
+      signal: AbortSignal.timeout(3000),
       next: { revalidate: 3600 },
     });
     if (!res.ok) return FALLBACK_REPOS;
