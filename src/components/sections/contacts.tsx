@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { useState, useRef } from 'react';
 import { contactsData } from '@/data/contacts-data';
+import { useLanguage } from '@/context/language-context';
 
 // ── Web3Forms endpoint (no backend needed) ─────────────────────────────────
 const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
@@ -19,6 +20,7 @@ interface FormState {
 const EMPTY_FORM: FormState = { name: '', email: '', message: '' };
 
 export function Contacts() {
+  const { t, isKhmer } = useLanguage();
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
   const [status, setStatus] = useState<FormStatus>('idle');
   const [errorMsg, setErrorMsg] = useState('');
@@ -110,7 +112,7 @@ export function Contacts() {
       <div className="flex justify-center my-5 lg:py-8">
         <div className="flex items-center">
           <span className="w-24 h-[2px] bg-[#1a1443]" />
-          <h2 className="bg-[#1a1443] w-fit text-white p-2 px-5 text-xl rounded-md">Contact</h2>
+          <h2 className="bg-[#1a1443] w-fit text-white p-2 px-5 text-xl rounded-md">{t.contact.sectionTitle}</h2>
           <span className="w-24 h-[2px] bg-[#1a1443]" />
         </div>
       </div>
@@ -118,14 +120,14 @@ export function Contacts() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 py-8">
         {/* LEFT: Contact info */}
         <div className="flex flex-col gap-5 text-gray-300">
-          <p className="text-[#16f2b3] text-xl font-medium uppercase">Let&apos;s Connect</p>
+          <p className="text-[#16f2b3] text-xl font-medium uppercase">{t.contact.letsConnect}</p>
           <p className="text-sm lg:text-base text-gray-300">
-            Have a project or opportunity? I&apos;d love to hear from you.
+            {t.contact.subtitle}
           </p>
           <div className="flex flex-col gap-3">
             {contactsData.email && (
               <div className="flex items-center gap-3">
-                <span className="text-[#16f2b3] font-bold">Email:</span>
+                <span className="text-[#16f2b3] font-bold">{t.contact.emailLabel}</span>
                 <a
                   href={`mailto:${contactsData.email}`}
                   className="text-gray-300 hover:text-violet-400 transition-colors text-sm break-all"
@@ -136,7 +138,7 @@ export function Contacts() {
             )}
             {contactsData.phone && (
               <div className="flex items-center gap-3">
-                <span className="text-[#16f2b3] font-bold">Phone:</span>
+                <span className="text-[#16f2b3] font-bold">{t.contact.phoneLabel}</span>
                 <a
                   href={`tel:${contactsData.phone}`}
                   className="text-gray-300 hover:text-violet-400 transition-colors text-sm"
@@ -147,7 +149,7 @@ export function Contacts() {
             )}
             {contactsData.address && (
               <div className="flex items-center gap-3">
-                <span className="text-[#16f2b3] font-bold">Location:</span>
+                <span className="text-[#16f2b3] font-bold">{t.contact.locationLabel}</span>
                 <span className="text-gray-300 text-sm">{contactsData.address}</span>
               </div>
             )}
@@ -189,7 +191,7 @@ export function Contacts() {
                   <svg className="h-4 w-4 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" />
                   </svg>
-                  <span>Thank you! Your message was sent. I&apos;ll get back to you soon.</span>
+                  <span>{t.contact.thankYou}</span>
                 </div>
               )}
 
@@ -212,7 +214,7 @@ export function Contacts() {
                   htmlFor="contact-name"
                   className="text-xs text-gray-300 font-medium uppercase tracking-wider block mb-1"
                 >
-                  Your Name
+                  {t.contact.nameField}
                 </label>
                 <input
                   id="contact-name"
@@ -223,7 +225,7 @@ export function Contacts() {
                   value={form.name}
                   onChange={handleChange}
                   disabled={isSubmitting}
-                  placeholder="Kim Chanthorn"
+                  placeholder={t.contact.namePlaceholder}
                   className={inputBase}
                 />
               </div>
@@ -234,7 +236,7 @@ export function Contacts() {
                   htmlFor="contact-email"
                   className="text-xs text-gray-300 font-medium uppercase tracking-wider block mb-1"
                 >
-                  Email
+                  {t.contact.emailField}
                 </label>
                 <input
                   id="contact-email"
@@ -245,7 +247,7 @@ export function Contacts() {
                   value={form.email}
                   onChange={handleChange}
                   disabled={isSubmitting}
-                  placeholder="you@example.com"
+                  placeholder={t.contact.emailPlaceholder}
                   className={inputBase}
                 />
               </div>
@@ -256,7 +258,7 @@ export function Contacts() {
                   htmlFor="contact-message"
                   className="text-xs text-gray-300 font-medium uppercase tracking-wider block mb-1"
                 >
-                  Message
+                  {t.contact.messageField}
                 </label>
                 <textarea
                   id="contact-message"
@@ -266,7 +268,7 @@ export function Contacts() {
                   value={form.message}
                   onChange={handleChange}
                   disabled={isSubmitting}
-                  placeholder="Your message..."
+                  placeholder={t.contact.messagePlaceholder}
                   className={`${inputBase} resize-none`}
                 />
               </div>
@@ -276,7 +278,7 @@ export function Contacts() {
                 type="submit"
                 id="contact-submit"
                 disabled={isSubmitting || status === 'success'}
-                aria-label={isSubmitting ? 'Sending message…' : 'Send message'}
+                aria-label={isSubmitting ? t.contact.sendingBtn : t.contact.sendBtn}
                 className="flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-pink-500 px-8 py-3 text-sm font-semibold uppercase tracking-wider text-white transition-all duration-300 hover:from-pink-500 hover:to-violet-600 disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {isSubmitting && (
@@ -290,7 +292,7 @@ export function Contacts() {
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                   </svg>
                 )}
-                {isSubmitting ? 'Sending…' : status === 'success' ? 'Message Sent ✓' : 'Send Message'}
+                {isSubmitting ? t.contact.sendingBtn : status === 'success' ? (isKhmer ? 'ផ្ញើរួចរាល់ ✓' : 'Message Sent ✓') : t.contact.sendBtn}
               </button>
             </form>
           </div>

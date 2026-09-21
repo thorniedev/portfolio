@@ -1,19 +1,23 @@
+'use client';
+
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { BsHeart, BsChat } from 'react-icons/bs';
 import { BlogPost } from '@/types';
+import { useLanguage } from '@/context/language-context';
 
-function timeAgo(dateStr: string): string {
+function timeAgo(dateStr: string, isKhmer: boolean): string {
   const diff = Date.now() - new Date(dateStr).getTime();
   const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
   const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30));
-  if (years > 0) return `${years} year${years > 1 ? 's' : ''} ago`;
-  if (months > 0) return `${months} month${months > 1 ? 's' : ''} ago`;
-  return 'recently';
+  if (years > 0) return isKhmer ? `${years} ឆ្នាំមុន` : `${years} year${years > 1 ? 's' : ''} ago`;
+  if (months > 0) return isKhmer ? `${months} ខែមុន` : `${months} month${months > 1 ? 's' : ''} ago`;
+  return isKhmer ? 'ថ្មីៗនេះ' : 'recently';
 }
 
 export function BlogSection({ blogs }: { blogs: BlogPost[] }) {
+  const { t, isKhmer } = useLanguage();
   const displayBlogs = blogs.slice(0, 6);
 
   return (
@@ -32,19 +36,19 @@ export function BlogSection({ blogs }: { blogs: BlogPost[] }) {
       <div className="flex justify-center my-5 lg:py-8">
         <div className="flex items-center">
           <span className="w-24 h-[2px] bg-[#1a1443]" />
-          <h2 className="bg-[#1a1443] w-fit text-white p-2 px-5 text-xl rounded-md">Blogs</h2>
+          <h2 className="bg-[#1a1443] w-fit text-white p-2 px-5 text-xl rounded-md">{t.blogs.sectionTitle}</h2>
           <span className="w-24 h-[2px] bg-[#1a1443]" />
         </div>
       </div>
 
       {displayBlogs.length === 0 ? (
-        <p className="text-center text-gray-400 py-12">No posts yet. Check back soon!</p>
+        <p className="text-center text-gray-400 py-12">{t.blogs.noPosts}</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-5 lg:gap-8 xl:gap-10">
           {displayBlogs.map((blog) => {
             const articleUrl = blog.canonical_url || blog.url || '/blog';
             const imageUrl = blog.cover_image || blog.image;
-            const ago = blog.published_at ? timeAgo(blog.published_at) : '';
+            const ago = blog.published_at ? timeAgo(blog.published_at, isKhmer) : '';
 
             return (
               <div
@@ -88,7 +92,9 @@ export function BlogSection({ blogs }: { blogs: BlogPost[] }) {
                     </p>
                   </a>
                   {blog.reading_time_minutes && (
-                    <p className="mb-2 text-sm text-[#16f2b3]">{blog.reading_time_minutes} Min Read</p>
+                    <p className="mb-2 text-sm text-[#16f2b3]">
+                      {blog.reading_time_minutes} {t.blogs.minRead}
+                    </p>
                   )}
                   <p className="text-sm lg:text-base text-gray-300 pb-3 lg:pb-6 line-clamp-3">
                     {blog.description}

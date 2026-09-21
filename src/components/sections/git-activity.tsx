@@ -10,6 +10,7 @@ import { VscRepo, VscGitCommit, VscHistory } from 'react-icons/vsc';
 import { HiOutlineExternalLink } from 'react-icons/hi';
 import { FaFire } from 'react-icons/fa';
 import { GitHubUser, GitHubActivityEvent, GitHubRepo } from '@/lib/github';
+import { useLanguage } from '@/context/language-context';
 
 interface GitActivityProps {
   user: GitHubUser;
@@ -32,6 +33,7 @@ function timeAgo(dateStr: string): string {
 }
 
 export function GitActivity({ user, events, repos }: GitActivityProps) {
+  const { t } = useLanguage();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -60,7 +62,7 @@ export function GitActivity({ user, events, repos }: GitActivityProps) {
         <div className="flex items-center">
           <span className="w-24 h-[2px] bg-[#1a1443]" />
           <h2 className="bg-[#1a1443] w-fit text-white p-2 px-5 text-xl rounded-md uppercase tracking-wider">
-            GitHub Activity
+            {t.gitActivity.sectionTitle}
           </h2>
           <span className="w-24 h-[2px] bg-[#1a1443]" />
         </div>
@@ -136,7 +138,7 @@ export function GitActivity({ user, events, repos }: GitActivityProps) {
                 <div>
                   <div className="text-lg font-bold text-white">{user.public_repos}</div>
                   <div className="text-[11px] uppercase tracking-wider text-gray-400">
-                    Public Repos
+                    {t.gitActivity.publicRepos}
                   </div>
                 </div>
               </div>
@@ -204,7 +206,7 @@ export function GitActivity({ user, events, repos }: GitActivityProps) {
                     blockMargin={4}
                     showWeekdayLabels
                     labels={{
-                      totalCount: '{{count}} total contributions in the last year',
+                      totalCount: `{{count}} ${t.gitActivity.contributions}`,
                     }}
                   />
                 ) : (
@@ -229,7 +231,7 @@ export function GitActivity({ user, events, repos }: GitActivityProps) {
               <div className="flex items-center justify-between mb-4">
                 <h4 className="text-base font-semibold text-white flex items-center gap-2">
                   <VscHistory className="text-[#16f2b3]" />
-                  Recent Git Activity
+                  {t.gitActivity.recentEvents}
                 </h4>
                 <span className="text-xs font-mono text-gray-400">
                   {events.length} recent pushes
@@ -289,7 +291,7 @@ export function GitActivity({ user, events, repos }: GitActivityProps) {
               <div className="flex items-center justify-between mb-4">
                 <h4 className="text-base font-semibold text-white flex items-center gap-2">
                   <VscRepo className="text-[#16f2b3]" />
-                  Active Repositories
+                  {t.gitActivity.topRepositories}
                 </h4>
                 <span className="text-xs font-mono text-gray-400">
                   {user.public_repos} total

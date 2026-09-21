@@ -1,11 +1,15 @@
+'use client';
+
 import * as React from 'react';
 import Link from 'next/link';
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { headerData } from '@/data/header-data';
 import { socialsData } from '@/data/socials-data';
+import { useLanguage } from '@/context/language-context';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const { t } = useLanguage();
 
   return (
     <footer className="border-t border-[#25213b] py-6">
@@ -16,18 +20,18 @@ export function Footer() {
             KIM CHANTHORN
           </Link>
           <p className="text-xs text-gray-300 flex items-center gap-1">
-            <span>© {currentYear} Kim Chanthorn (ThornieDev). Made with</span>
+            <span>© {currentYear} Kim Chanthorn (ThornieDev). {t.footer.madeWith}</span>
             <span className="text-pink-500" aria-label="love">♥</span>
-            <span>using Next.js</span>
+            <span>{t.footer.using}</span>
           </p>
         </div>
 
         {/* Nav links */}
         <nav aria-label="Footer Navigation" className="flex items-center gap-5 text-sm text-gray-300">
-          <Link href="/#about" className="hover:text-pink-500 transition-colors">About</Link>
-          <Link href="/#projects" className="hover:text-pink-500 transition-colors">Projects</Link>
-          <Link href="/blog" className="hover:text-pink-500 transition-colors">Blog</Link>
-          <Link href="/#contact" className="hover:text-pink-500 transition-colors">Contact</Link>
+          <Link href="/#about" className="hover:text-pink-500 transition-colors">{t.nav.about}</Link>
+          <Link href="/#projects" className="hover:text-pink-500 transition-colors">{t.nav.projects}</Link>
+          <Link href="/blog" className="hover:text-pink-500 transition-colors">{t.nav.blogs}</Link>
+          <Link href="/#contact" className="hover:text-pink-500 transition-colors">{t.contact.sectionTitle}</Link>
         </nav>
 
         {/* Socials */}

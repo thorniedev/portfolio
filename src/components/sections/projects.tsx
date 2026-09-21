@@ -1,8 +1,22 @@
+'use client';
+
 import * as React from 'react';
 import { projectsData } from '@/data/projects-data';
+import { useLanguage } from '@/context/language-context';
 
-function ProjectCard({ project, index }: { project: (typeof projectsData)[0]; index: number }) {
+function ProjectCard({
+  project,
+  index,
+  t,
+}: {
+  project: (typeof projectsData)[0];
+  index: number;
+  t: ReturnType<typeof useLanguage>['t'];
+}) {
   const tags = project.tags;
+  const localizedItem = t.projects.items.find((item) => item.id === project.id);
+  const projectName = localizedItem?.projectName || project.projectName;
+  const projectDesc = localizedItem?.projectDesc || project.projectDesc;
 
   return (
     <div id={`sticky-card-${index + 1}`} className="w-full mx-auto max-w-2xl sticky" style={{ top: `${(index + 1) * 40}px` }}>
@@ -21,7 +35,7 @@ function ProjectCard({ project, index }: { project: (typeof projectsData)[0]; in
               <div className="h-2 w-2 lg:h-3 lg:w-3 rounded-full bg-green-200" />
             </div>
             <p className="text-center ml-3 text-[#16f2b3] text-base lg:text-xl">
-              {project.projectName}
+              {projectName}
             </p>
           </div>
           {/* Code block */}
@@ -36,7 +50,7 @@ function ProjectCard({ project, index }: { project: (typeof projectsData)[0]; in
               <div>
                 <span className="ml-4 lg:ml-8 mr-2 text-white">name:</span>
                 <span className="text-gray-400">&apos;</span>
-                <span className="text-amber-300">{project.projectName}</span>
+                <span className="text-amber-300">{projectName}</span>
                 <span className="text-gray-400">&apos;,</span>
               </div>
               <div className="ml-4 lg:ml-8 mr-2">
@@ -52,7 +66,7 @@ function ProjectCard({ project, index }: { project: (typeof projectsData)[0]; in
               </div>
               <div className="ml-4 lg:ml-8 mr-2">
                 <span className="text-white">Description:</span>
-                <span className="text-cyan-400"> {project.projectDesc}</span>
+                <span className="text-cyan-400"> {projectDesc}</span>
                 <span className="text-gray-400">,</span>
               </div>
               {/* Links */}
@@ -63,10 +77,10 @@ function ProjectCard({ project, index }: { project: (typeof projectsData)[0]; in
                       href={project.code}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={`Source code for ${project.projectName}`}
-                      className="text-[#16f2b3] hover:underline text-xs"
+                      aria-label={`Source code for ${projectName}`}
+                      className="text-[#16f2b3] hover:underline text-xs font-mono"
                     >
-                      // source code
+                      {t.projects.sourceCode}
                     </a>
                   )}
                   {project.demo && (
@@ -74,10 +88,10 @@ function ProjectCard({ project, index }: { project: (typeof projectsData)[0]; in
                       href={project.demo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={`Live demo for ${project.projectName}`}
-                      className="text-violet-400 hover:underline text-xs"
+                      aria-label={`Live demo for ${projectName}`}
+                      className="text-violet-400 hover:underline text-xs font-mono"
                     >
-                      // live demo
+                      {t.projects.liveDemo}
                     </a>
                   )}
                 </div>
@@ -94,6 +108,8 @@ function ProjectCard({ project, index }: { project: (typeof projectsData)[0]; in
 }
 
 export function Projects() {
+  const { t } = useLanguage();
+
   return (
     <div id="projects" className="relative z-50 my-12 lg:my-24">
       {/* Section heading — left-aligned with line */}
@@ -101,7 +117,7 @@ export function Projects() {
         <div className="w-[80px] h-[80px] bg-violet-100 rounded-full absolute -top-3 left-0 translate-x-1/2 filter blur-3xl opacity-30" />
         <div className="flex items-center justify-start relative">
           <h2 className="bg-[#1a1443] absolute left-0 w-fit text-white px-5 py-3 text-xl rounded-md">
-            PROJECTS
+            {t.projects.sectionTitle}
           </h2>
           <span className="w-full h-[2px] bg-[#1a1443]" />
         </div>
@@ -111,7 +127,7 @@ export function Projects() {
       <div className="pt-24">
         <div className="flex flex-col gap-6">
           {projectsData.map((project, i) => (
-            <ProjectCard key={project.id} project={project} index={i} />
+            <ProjectCard key={project.id} project={project} index={i} t={t} />
           ))}
         </div>
       </div>

@@ -226,5 +226,29 @@
   .marquee-wrapper:hover .marquee-track {
     animation-play-state: paused !important;
   }
+
+  /* ─── Khmer Typography ─────────────────────────────────────────────────────── */
+  html[lang="km"],
+  [data-lang="km"] {
+    font-family: var(--font-khmer), var(--font-sans), system-ui, sans-serif;
+  }
+
+  html[lang="km"] h1,
+  html[lang="km"] h2,
+  html[lang="km"] h3,
+  html[lang="km"] h4,
+  [data-lang="km"] h1,
+  [data-lang="km"] h2,
+  [data-lang="km"] h3,
+  [data-lang="km"] h4 {
+    font-family: var(--font-khmer), var(--font-heading), system-ui, sans-serif;
+    line-height: 1.35;
+  }
+
+  html[lang="km"] p,
+  [data-lang="km"] p {
+    line-height: 1.8;
+  }
 }
+
 

@@ -9,8 +9,10 @@ import { BlogPost } from '@/types';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { useLanguage } from '@/context/language-context';
 
 export function BlogArchive({ initialBlogs }: { initialBlogs: BlogPost[] }) {
+  const { t } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredBlogs = useMemo(() => {
@@ -32,17 +34,17 @@ export function BlogArchive({ initialBlogs }: { initialBlogs: BlogPost[] }) {
           className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-brand-500 dark:text-dark-muted dark:hover:text-brand-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded p-1"
         >
           <ArrowLeft className="h-4 w-4" />
-          <span>Back to Portfolio</span>
+          <span>{t.blogs.backToHome}</span>
         </Link>
       </div>
 
       {/* Header */}
       <div className="flex flex-col items-start gap-4">
         <h1 className="font-heading text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl dark:text-dark-text">
-          Articles & Writings
+          {t.blogs.articlesHeading}
         </h1>
         <p className="max-w-2xl text-base text-slate-600 dark:text-dark-muted">
-          Practical tutorials, architecture guides, web automation, and engineering reflections.
+          {t.blogs.articlesSubtitle}
         </p>
       </div>
 
@@ -52,7 +54,7 @@ export function BlogArchive({ initialBlogs }: { initialBlogs: BlogPost[] }) {
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
           <input
             type="search"
-            placeholder="Search articles by title or keyword..."
+            placeholder={t.blogs.searchPlaceholder}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="h-11 w-full rounded-full border border-slate-200 bg-white pl-10 pr-4 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:border-dark-border dark:bg-dark-card dark:text-dark-text dark:placeholder:text-dark-muted"

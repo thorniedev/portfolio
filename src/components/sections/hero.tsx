@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import Link from 'next/link';
 import { FaGithub, FaLinkedin, FaFacebook, FaTwitter, FaTelegram } from 'react-icons/fa';
@@ -5,10 +7,13 @@ import { SiLeetcode } from 'react-icons/si';
 import { headerData } from '@/data/header-data';
 import { socialsData } from '@/data/socials-data';
 import { TypedText } from '@/components/ui/typed-text';
+import { useLanguage } from '@/context/language-context';
 
 const skills = ['React', 'NextJS', 'TypeScript', 'Java', 'Spring Boot', 'PostgreSQL', 'Docker', 'AWS'];
 
 export function Hero() {
+  const { t, language } = useLanguage();
+
   return (
     <section className="relative flex flex-col items-center justify-between py-4 lg:py-12" aria-label="Kim Chanthorn (ThornieDev) — Hero Section">
       <div className="grid grid-cols-1 items-start lg:grid-cols-2 lg:gap-12 gap-y-8">
@@ -16,26 +21,23 @@ export function Hero() {
         {/* LEFT: Text — semantic keyword placement */}
         <div className="order-2 lg:order-1 flex flex-col items-start justify-center p-2 pb-20 md:pb-10 lg:pt-10">
           <h1 className="text-3xl font-bold leading-10 text-white md:font-extrabold lg:text-[2.6rem] lg:leading-[3.5rem]">
-            Hello,{' '}
+            {t.hero.greeting}{' '}
             <br />
-            This is{' '}
+            {t.hero.thisIs}{' '}
             {/* Pink name — exact reference style */}
             <span className="text-pink-500">Kim Chanthorn</span>
-            {' ,'} I&apos;m a Professional{' '}
+            {' ,'} {t.hero.imA}{' '}
             <TypedText
-              strings={[
-                'Full-Stack Developer.',
-                'Software Engineer.',
-                'DevOps Engineer.'
-              ]}
+              key={language}
+              strings={[...t.hero.roles]}
             />
           </h1>
 
           {/* Tagline — natural keyword in visible text */}
           <p className="mt-4 text-sm text-gray-300 max-w-md">
-            Full-stack software developer based in{' '}
-            <span className="text-[#16f2b3] font-medium">Phnom Penh, Cambodia</span>
-            {' '}— building high-performance web applications and backend systems.
+            {t.hero.taglineBefore}{' '}
+            <span className="text-[#16f2b3] font-medium">{t.hero.taglineLocation}</span>
+            {' '}{t.hero.taglineAfter}
           </p>
 
           {/* Socials */}
@@ -88,7 +90,7 @@ export function Hero() {
               aria-label="Contact Kim Chanthorn"
             >
               <span className="px-3 text-xs md:px-8 py-3 md:py-4 bg-[#0d1224] rounded-full border-none text-center md:text-sm font-medium uppercase tracking-wider text-white no-underline transition-all duration-200 ease-out md:font-semibold flex items-center gap-1 hover:gap-3">
-                <span>Contact me</span>
+                <span>{t.hero.contactBtn}</span>
                 <svg aria-hidden="true" stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" height="16" width="16" xmlns="http://www.w3.org/2000/svg">
                   <path d="M2 22C2 17.5817 5.58172 14 10 14C14.4183 14 18 17.5817 18 22H2ZM10 13C6.685 13 4 10.315 4 7C4 3.685 6.685 1 10 1C13.315 1 16 3.685 16 7C16 10.315 13.315 13 10 13ZM20 17H24V19H20V17ZM17 12H24V14H17V12ZM19 7H24V9H19V7Z" />
                 </svg>
@@ -102,7 +104,7 @@ export function Hero() {
                 href={headerData.resumePdf}
                 aria-label="Kim Chanthorn's Resume (PDF)"
               >
-                <span>Get Resume</span>
+                <span>{t.hero.resumeBtn}</span>
                 <svg aria-hidden="true" stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" height="16" width="16" xmlns="http://www.w3.org/2000/svg">
                   <path fill="none" d="M0 0h24v24H0z" />
                   <path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z" />

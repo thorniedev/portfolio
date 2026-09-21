@@ -1,6 +1,9 @@
+'use client';
+
 import * as React from 'react';
 import Image from 'next/image';
 import { skillsData } from '@/data/skills-data';
+import { useLanguage } from '@/context/language-context';
 
 function SkillCard({ name, icon }: { name: string; icon: string }) {
   return (
@@ -22,6 +25,8 @@ function SkillCard({ name, icon }: { name: string; icon: string }) {
 }
 
 export function Skills() {
+  const { t } = useLanguage();
+
   return (
     <div id="skills" className="relative z-50 border-t my-12 lg:my-24 border-[#25213b]">
       {/* Violet blur glow */}
@@ -38,7 +43,7 @@ export function Skills() {
       <div className="flex justify-center my-5 lg:py-8">
         <div className="flex items-center">
           <span className="w-24 h-[2px] bg-[#1a1443]" />
-          <h2 className="bg-[#1a1443] w-fit text-white p-2 px-5 text-xl rounded-md">Skills</h2>
+          <h2 className="bg-[#1a1443] w-fit text-white p-2 px-5 text-xl rounded-md">{t.skills.sectionTitle}</h2>
           <span className="w-24 h-[2px] bg-[#1a1443]" />
         </div>
       </div>

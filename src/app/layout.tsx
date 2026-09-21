@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from 'next';
-import { Poppins, Outfit } from 'next/font/google';
+import { Poppins, Outfit, Kantumruy_Pro } from 'next/font/google';
 import { Navbar } from '@/components/sections/navbar';
 import { Footer } from '@/components/sections/footer';
 import { BackToTop } from '@/components/ui/back-to-top';
 import { ThemeProvider } from '@/lib/theme';
+import { LanguageProvider } from '@/context/language-context';
 import { ThemeSelector } from '@/components/ui/theme-selector';
 import { headerData } from '@/data/header-data';
 import { contactsData } from '@/data/contacts-data';
@@ -27,6 +28,13 @@ const outfit = Outfit({
   subsets: ['latin'],
   weight: ['600', '700'],
   variable: '--font-heading',
+  display: 'swap',
+});
+
+const kantumruyPro = Kantumruy_Pro({
+  subsets: ['khmer', 'latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-khmer',
   display: 'swap',
 });
 
@@ -237,7 +245,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://dev.to" />
         <link rel="preconnect" href="https://media.dev.to" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://media2.dev.to" crossOrigin="anonymous" />
-        {/* og:locale:alternate for Khmer language users in Cambodia */}
+        {/* ── Open Graph tags explicitly in head for Facebook / Messenger / Telegram ── */}
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Kim Chanthorn — ThornieDev Portfolio" />
+        <meta property="og:title" content="Kim Chanthorn (Thornie) | Full-Stack Developer & Engineer" />
+        <meta property="og:description" content="Khmer dev building high-performance web applications and backend systems from Cambodia. Portfolio of Kim Chanthorn (ThornieDev)." />
+        <meta property="og:url" content="https://chanthorndev.site/" />
+        <meta property="og:image" content="https://chanthorndev.site/og-image.png" />
+        <meta property="og:image:secure_url" content="https://chanthorndev.site/og-image.png" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1024" />
+        <meta property="og:image:height" content="572" />
+        <meta property="og:image:alt" content="Kim Chanthorn (ThornieDev) — Full-Stack Developer & Engineer" />
+        <meta property="og:locale" content="en_US" />
         <meta property="og:locale:alternate" content="km_KH" />
         {/* ── Entity / Authorship signals (Google Knowledge Graph) ────────── */}
         {/* rel="me" tells Google these profiles belong to the same person   */}
@@ -261,19 +281,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
       </head>
-      <body className={`${poppins.variable} ${outfit.variable} font-sans antialiased`}>
+      <body className={`${poppins.variable} ${outfit.variable} ${kantumruyPro.variable} font-sans antialiased`}>
         <ThemeProvider>
-          <div className="min-h-screen relative mx-auto px-6 sm:px-12 lg:max-w-[70rem] xl:max-w-[76rem] 2xl:max-w-[92rem]">
-            <header>
-              <Navbar />
-            </header>
-            <main id="main-content">
-              {children}
-            </main>
-            <Footer />
-          </div>
-          <BackToTop />
-          <ThemeSelector />
+          <LanguageProvider>
+            <div className="min-h-screen relative mx-auto px-6 sm:px-12 lg:max-w-[70rem] xl:max-w-[76rem] 2xl:max-w-[92rem]">
+              <header>
+                <Navbar />
+              </header>
+              <main id="main-content">
+                {children}
+              </main>
+              <Footer />
+            </div>
+            <BackToTop />
+            <ThemeSelector />
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

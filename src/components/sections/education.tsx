@@ -1,10 +1,14 @@
+'use client';
+
 import * as React from 'react';
 import Image from 'next/image';
 import { BsPersonWorkspace } from 'react-icons/bs';
 import AnimationLottie from '@/components/ui/animation-lottie';
-import { educationData } from '@/data/education-data';
+import { useLanguage } from '@/context/language-context';
 
 export function Education() {
+  const { t } = useLanguage();
+
   return (
     <div id="education" className="relative z-50 border-t my-12 lg:my-24 border-[#25213b]">
       <Image
@@ -27,7 +31,7 @@ export function Education() {
       <div className="flex justify-center my-5 lg:py-8">
         <div className="flex items-center">
           <span className="w-24 h-[2px] bg-[#1a1443]" />
-          <h2 className="bg-[#1a1443] w-fit text-white p-2 px-5 text-xl rounded-md">Educations</h2>
+          <h2 className="bg-[#1a1443] w-fit text-white p-2 px-5 text-xl rounded-md">{t.education.sectionTitle}</h2>
           <span className="w-24 h-[2px] bg-[#1a1443]" />
         </div>
       </div>
@@ -44,7 +48,7 @@ export function Education() {
           {/* RIGHT: Education Cards */}
           <div>
             <div className="flex flex-col gap-6">
-              {educationData.map((edu) => (
+              {t.education.items.map((edu) => (
                 <article
                   key={edu.id}
                   className="glow-card h-fit cursor-pointer border border-[#2a2e5a] transition-all duration-300 relative bg-[#101123] text-gray-200 rounded-xl hover:border-transparent w-full overflow-hidden"
@@ -60,7 +64,7 @@ export function Education() {
                     />
                     <div className="flex justify-center">
                       <p className="text-xs sm:text-sm text-[#16f2b3]">
-                        {edu.startYear} - {edu.endYear}
+                        {edu.period}
                       </p>
                     </div>
                     <div className="flex items-center gap-x-8 px-3 py-5">
@@ -69,7 +73,7 @@ export function Education() {
                       </div>
                       <div>
                         <p className="text-base sm:text-xl mb-2 font-medium uppercase">{edu.course}</p>
-                        <p className="text-sm sm:text-base">{edu.institution}</p>
+                        <p className="text-sm sm:text-base text-gray-300">{edu.institution}</p>
                       </div>
                     </div>
                   </div>

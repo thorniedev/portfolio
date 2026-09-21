@@ -25,15 +25,20 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
+    type: 'website',
+    locale: 'en_US',
     url: 'https://chanthorndev.site',
+    siteName: 'Kim Chanthorn — ThornieDev Portfolio',
     title: 'Kim Chanthorn (Thornie) | Full-Stack Developer & Engineer',
     description:
       'Khmer dev building scalable web applications and backend systems from Cambodia. Portfolio of Kim Chanthorn (ThornieDev).',
     images: [
       {
-        url: '/og-image.png',
+        url: 'https://chanthorndev.site/og-image.png',
+        secureUrl: 'https://chanthorndev.site/og-image.png',
         width: 1024,
         height: 572,
+        type: 'image/png',
         alt: 'Kim Chanthorn (ThornieDev) — Full-Stack Developer & Engineer',
       },
     ],

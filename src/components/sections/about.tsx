@@ -1,15 +1,19 @@
+'use client';
+
 import * as React from 'react';
 import Image from 'next/image';
-import { aboutData } from '@/data/about-data';
 import { headerData } from '@/data/header-data';
+import { useLanguage } from '@/context/language-context';
 
 export function About() {
+  const { t } = useLanguage();
+
   return (
     <div id="about" className="my-12 lg:my-16 relative">
       {/* Side label — top right (elevated z-30 so it remains 100% visible on hover) */}
       <div className="hidden lg:flex flex-col items-center absolute top-16 -right-6 xl:-right-8 z-30 select-none pointer-events-none">
         <span className="bg-[#1a1443] w-fit text-white rotate-90 p-2 px-5 text-xl rounded-md shadow-xl border border-[#2a2e5a]/60">
-          ABOUT ME
+          {t.about.sideTitle}
         </span>
         <span className="h-36 w-[2px] bg-[#1a1443]" />
       </div>
@@ -17,13 +21,13 @@ export function About() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
         {/* LEFT: Text */}
         <div className="order-2 lg:order-1">
-          <h2 className="font-medium mb-5 text-[#16f2b3] text-xl uppercase">Who I am?</h2>
+          <h2 className="font-medium mb-5 text-[#16f2b3] text-xl uppercase">{t.about.sectionTitle}</h2>
           <p className="text-gray-200 text-sm lg:text-lg">
-            {aboutData.description1}
+            {t.about.description1}
           </p>
-          {aboutData.description2 && (
+          {t.about.description2 && (
             <p className="text-gray-200 text-sm lg:text-lg mt-4">
-              {aboutData.description2}
+              {t.about.description2}
             </p>
           )}
         </div>
